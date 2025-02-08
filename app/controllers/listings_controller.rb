@@ -1,4 +1,7 @@
 class ListingsController < ApplicationController
+
+  before_action :authenticate_user!
+
   def index
     @listings = Listing.all
   end
@@ -9,7 +12,11 @@ class ListingsController < ApplicationController
 
   def show
     @listing = Listing.find(params[:id])
+    unless @user == current_user
+      redirect_to :back, :alert => "Access denied."
+    end
   end
+
 
   def listings_params
     params.require(:listing).permit(:name, :description, :price, :active, :capacity, :photo)
