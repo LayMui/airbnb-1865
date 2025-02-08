@@ -1,16 +1,21 @@
-<h1>Listings Index</h1>
 <div class="container mt-3">
-  <div class="row">
-    <div class="col-12">
-      <h1>All Listings</h1>
-    </div>
-  </div>
 
   <div class="row">
     <div class="col">
      <% @listings.each do | listing | %>
+    <div>
      <%= cl_image_tag listing.photo.key, height: 300, width: 400, crop: :fill %>
-     <%= listing.name %>
+     </div>
+    <div style="width: 50%; word-wrap: break-word;">
+     <strong>Name:</strong> <%= listing.name %>
+     </div>
+      <div style="width: 50%; word-wrap: break-word;">
+     <strong>Description: </strong><%= listing.description %>
+     </div>
+     <strong>Price: </strong><%= listing.price %>
+      <div style="width: 50%; word-wrap: break-word;">
+     <strong>Capacity: </strong><%= listing.capacity %>
+     </div>
      <%end%>
     </div>
   </div>
