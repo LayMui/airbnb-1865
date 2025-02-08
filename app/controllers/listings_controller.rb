@@ -6,6 +6,7 @@ class ListingsController < ApplicationController
 
   def show
     @listing = Listing.find(params[:id])
+  end
 
   def listings_params
     params.require(:listing).permit(:name, :description, :price, :active, :capacity, :photo)
