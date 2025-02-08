@@ -1,5 +1,7 @@
 class ListingsController < ApplicationController
+
   before_action :authenticate_user!
+
   def index
     @listings = Listing.all
   end
@@ -7,7 +9,6 @@ class ListingsController < ApplicationController
   def new
     @listing = Listing.new
   end
-
 
   def show
     @listing = Listing.find(params[:id])
