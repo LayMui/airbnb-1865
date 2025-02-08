@@ -9,6 +9,7 @@
 #   end
 #
 require "open-uri"
+Booking.destroy_all
 Listing.destroy_all
 
 listing = Listing.new(
@@ -19,5 +20,17 @@ listing = Listing.new(
   capacity: 3
 )
 
-listing.photo.attach(io: File.open("#{Rails.root}/app/assets/images/san_francisco.jpg"), filename: 'san_francisco.jpg', content_type: 'image/jpg')
+User.all.each do |user| 
+  booking = Booking.create!(
+    booking_reference: "BOOK#{rand(1000..9999)}",
+    user: user,
+    listing: listing,
+    start_date: DateTime.now,
+    end_date: DateTime.now + 5.days,
+    confirmation_status: "pending",
+    number_of_guests: 2
+ )
+end
+
+# listing.photo.attach(io: File.open("#{Rails.root}/app/assets/images/san_francisco.jpg"), filename: 'san_francisco.jpg', content_type: 'image/jpg')
 listing.save
