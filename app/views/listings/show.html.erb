@@ -1,3 +1,17 @@
-<h1>Show Listing</h1>
-
 <%= render "shared/navbar" %>
+
+
+
+<div class="container my-5">
+  <div class="row">
+    <h1>Listing Details</h1>
+    <div class="col-6" style="height: 500px; background-image: url('https://www.capitaland.com/en/find-a-property/global-property-listing/residential/the-interlace/_jcr_content/root/container/container/entitydetails.coreimg.85.1600.jpeg/content/dam/capitaland-media-library/residential/Singapore/Singapore/The%20Interlace/Interlace_Woh%20Hup%20and%20CLS.jpg'); background-size: cover; background-position: center;">
+    </div>
+    <div class="col-6">
+      <h2><%= @listing.name %></h2>
+      <p><%= @listing.description %></p>
+      <p><%= @listing.address %></p>
+      <p><%= @listing.location.country_code %></p>
+    </div>
+  </div>
+</div>
