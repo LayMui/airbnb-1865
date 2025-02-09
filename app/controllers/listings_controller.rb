@@ -21,9 +21,9 @@ class ListingsController < ApplicationController
 
   def show
     @listing = Listing.find(params[:id])
-    unless @user == current_user
-      redirect_to :back, :alert => "Access denied."
-    end
+    # unless @user == current_user
+      # redirect_to :listings, :alert => "Access denied."
+    # end
   end
 
 
