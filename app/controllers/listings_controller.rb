@@ -8,6 +8,14 @@ class ListingsController < ApplicationController
     @listing = Listing.new
   end
 
+  def create
+    @listing = Listing.new(listings_params)
+    if @listing.save
+      redirect_to listings_path
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
 
   def show
     @listing = Listing.find(params[:id])

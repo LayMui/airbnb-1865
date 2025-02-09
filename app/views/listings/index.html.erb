@@ -4,7 +4,11 @@
     <div class="col">
      <% @listings.each do | listing | %>
     <div>
-     <%= cl_image_tag listing.photo.key, height: 300, width: 400, crop: :fill %>
+   <% if listing.photo.attached? %>
+    <%= cl_image_tag listing.photo.key, height: 300, width: 400, crop: :fill %>
+   <% else %>
+    <%= image_tag "default_image.jpg", height: 300, width: 400 %>
+   <% end %>
      </div>
     <div style="width: 50%; word-wrap: break-word;">
      <strong>Name:</strong> <%= listing.name %>
