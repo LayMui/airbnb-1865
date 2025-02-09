@@ -46,8 +46,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_08_082743) do
     t.string "booking_reference"
     t.bigint "user_id", null: false
     t.bigint "listing_id", null: false
-    t.date "start_date"
-    t.date "end_date"
+    t.datetime "start_date"
+    t.datetime "end_date"
     t.string "confirmation_status"
     t.integer "number_of_guests"
     t.datetime "created_at", null: false

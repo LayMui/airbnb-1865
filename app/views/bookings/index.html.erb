@@ -1,0 +1,24 @@
+<div class="container">
+  <h1>My Bookings</h1>
+  
+  <% if @bookings.any? %>
+    <div class="row">
+      <% @bookings.each do |booking| %>
+        <div class="col-12 col-md-6 col-lg-4 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"><%= booking.listing.name %></h5>
+              <p class="card-text">
+                <strong>Check-in:</strong> <%= booking.start_date.strftime("%B %d, %Y") %><br>
+                <strong>Check-out:</strong> <%= booking.end_date.strftime("%B %d, %Y") %>
+              </p>
+              <%= link_to "View Details", booking_path(booking), class: "btn btn-primary" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p>You don't have any bookings yet.</p>
+  <% end %>
+</div>
