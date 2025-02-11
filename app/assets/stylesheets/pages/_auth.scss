@@ -1,0 +1,13 @@
+.auth-left-banner {
+    background-image: linear-gradient(rgba(171, 35, 58, 0.5), rgba(255, 192, 203, 0.7)), url(asset-path('auth_banner.jpg'));
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
+.auth-right-banner {
+  width: 100%;
+  
+  @media (min-width: 576px) {
+    width: 50%;
+  }
+}
