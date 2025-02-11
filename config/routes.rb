@@ -13,4 +13,7 @@ Rails.application.routes.draw do
     # root "posts#index"
     resources :listings, only: [:index, :show]
     resources :bookings, only: [:index, :show]
+
+  get "hostings/index", to: "hostings#index"
+
 end
