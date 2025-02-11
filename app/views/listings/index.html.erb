@@ -1,25 +1,27 @@
-<div class="container mt-3">
- <%= render "shared/navbar" %>
+<div class="container">
+   <%= render "shared/navbar" %>
   <div class="row">
-    <div class="col">
-     <% @listings.each do | listing | %>
-    <div>
-   <% if listing.photo.attached? %>
-    <%= cl_image_tag listing.photo.key, height: 300, width: 400, crop: :fill %>
-   <% else %>
-    <%= image_tag "https://demo-source.imgix.net/house.jpg", height: 300, width: 400 %>
-   <% end %>
-     </div>
-    <div style="width: 50%; word-wrap: break-word;">
-     <strong>Name:</strong> <%= listing.name %>
-     </div>
-      <div style="width: 50%; word-wrap: break-word;">
-     <strong>Description: </strong><%= listing.description %>
-     </div>
-     <strong>Price: </strong><%= listing.price %>
-      <div style="width: 50%; word-wrap: break-word;">
-     <strong>Capacity: </strong><%= listing.capacity %>
-     </div>
-     <%end%>
+      <% @listings.each do | listing | %>
+    <div class="col-md-4 mb-4">
+      <div class="card">
+         <% if listing.photo.attached? %>
+          <%= cl_image_tag listing.photo.key, height: 300, width: 400, crop: :fill %>
+        <% else %>
+          <%= image_tag "https://demo-source.imgix.net/house.jpg", height: 300, width: 400 %>
+        <% end %>
+         <!-- Rating Icon -->
+          <div class="rating-icon position-absolute top-0 end-0 p-2">
+            <i class="bi bi-star-fill"></i> <!-- Star icon from Bootstrap Icons -->
+            <span class="rating-text">4.5</span> <!-- Rating text -->
+          </div>
+        <div class="card-body">
+          <h5 class="card-title"><strong>Name: </strong><%= listing.name %></p></h5>
+          <p class="card-text"><%= listing.name %></p>
+          <p><strong>Price: </strong>$<%= listing.price %>/night</p>
+          <p><strong>Capacity: </strong><%= listing.capacity%></p>
+        </div>
+      </div>
     </div>
+<%end%>
   </div>
+</div>

@@ -12,9 +12,11 @@ class ListingsController < ApplicationController
 
   def create
     @listing = Listing.new(listings_params)
+
     if @listing.save
       redirect_to listings_path
     else
+      raise
       render :new, status: :unprocessable_entity
     end
   end
