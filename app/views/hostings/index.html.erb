@@ -1,0 +1,37 @@
+<%= render "shared/navbar" %>
+
+<div class="container my-5">
+  <h1>Welcome home, <%= current_user.email.match(/^([a-zA-Z0-9._%+-]+)/)%></h1>
+</div>
+<%# <p>Find me in app/views/hostings/index.html.erb</p> %>
+
+<div class="container my-5">
+  <div class="row">
+    <% @hostings.each do |hosting| %>
+      <div class="col-8">
+        <div class="card mb-3 rounded-5" style="width: 100%;">
+            <img src="https://www.capitaland.com/en/find-a-property/global-property-listing/residential/the-interlace/_jcr_content/root/container/container/entitydetails.coreimg.85.1600.jpeg/content/dam/capitaland-media-library/residential/Singapore/Singapore/The%20Interlace/Interlace_Woh%20Hup%20and%20CLS.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title"><%= hosting.name %></h5>
+              <p class="card-text"><%= hosting.description %></p>
+              <p class="card-text"><%= hosting.location.country_name %></p>
+            </div>
+          </div>
+        </div>
+      <div class="col-4">
+        <a href="#" class="btn btn-primary">Check booking status</a>
+        <% @bookings.each do |booking| %>
+          <div class="card mt-2 rounded-5">
+            <h5 class="card-title">Name: <%= booking.user.email.match(/^([a-zA-Z0-9._%+-]+)/) %></h5>
+            <p class="card-text">Booking ID: <%= booking.id %></p>
+            <p class="card-text">Check-in: <%= booking.start_date %></p>
+            <p class="card-text">Check-out: <%= booking.end_date %></p>
+            <p class="card-text">Status: <%= booking.confirmation_status %></p>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%# <%= link_to "Back to Hostings", hostings_path %>
