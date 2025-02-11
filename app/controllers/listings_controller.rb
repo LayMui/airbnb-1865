@@ -4,6 +4,15 @@ class ListingsController < ApplicationController
 
   def index
     @listings = Listing.all
+
+     # The `geocoded` scope filters only listing with coordinates
+    @markers = @listings.geocoded.map do |listing|
+    {
+      lat: listing.latitude,
+      lng: listing.longitude
+    }
+  end
+
   end
 
   def new
@@ -26,6 +35,6 @@ class ListingsController < ApplicationController
 
 
   def listings_params
-    params.require(:listing).permit(:name, :description, :price, :active, :capacity, :photo)
+    params.require(:listing).permit(:name, :description, :address, :price, :active, :capacity, :photo)
   end
 end
