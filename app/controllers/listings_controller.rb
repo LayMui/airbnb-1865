@@ -12,20 +12,16 @@ class ListingsController < ApplicationController
 
   def create
     @listing = Listing.new(listings_params)
-
-    if @listing.save
+    @listing.user = current_user
+    if @listing.save!
       redirect_to listings_path
     else
-      raise
       render :new, status: :unprocessable_entity
     end
   end
 
   def show
     @listing = Listing.find(params[:id])
-    # unless @user == current_user
-      # redirect_to :listings, :alert => "Access denied."
-    # end
   end
 
 
