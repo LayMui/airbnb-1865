@@ -1,6 +1,6 @@
 class BookingsController < ApplicationController
   def index
-    @bookings = current
+    @bookings = current_user.bookings
   end 
 
   def show
