@@ -1,23 +1,43 @@
 <div class="container">
-  <h1>My Bookings</h1>
-  
+  <div class="mt-4">
+    <%= link_to root_path do %>
+      <%= image_tag "fake_airbnb.png", class: "me-3", style: "height: 40px;" %>
+    <% end %>
+    <%= render "shared/navbar" %>
+
+    <h1 class="mt-4"><strong>Trips</strong></h1>
+  </div>
   <% if @bookings.any? %>
-    <div class="row">
-      <% @bookings.each do |booking| %>
-        <div class="col-12 col-md-6 col-lg-4 mb-4">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title"><%= booking.listing.name %></h5>
-              <p class="card-text">
-                <strong>Check-in:</strong> <%= booking.start_date.strftime("%B %d, %Y") %><br>
-                <strong>Check-out:</strong> <%= booking.end_date.strftime("%B %d, %Y") %>
-              </p>
-              <%= link_to "View Details", booking_path(booking), class: "btn btn-primary" %>
+    <div class="card border mb-4">
+      <div class="card-body text-center">
+        <h4><strong>No trips booked ... yet!</strong></h4>
+        <p>Time to dust off your bags and start planning.</p>
+        <%= link_to "Start exploring", root_path, class: "btn btn-primary" %>
+      </div>
+    </div>
+      <div class="row">
+        <% @bookings.each do |booking| %>
+          <div class="col-12 col-sm-6 col-lg-4 mb-4">
+            <div class="card border-0">
+              <div class="row g-0">
+                <div class="col-4" style="overflow: hidden; border-radius: 8px;">
+                  <%= image_tag "airbnb-listing-1.jpg", class: "img-fluid rounded h-100", style: "object-fit: cover;" %>
+                </div>
+                <div class="col-8">
+                  <div class="card-body">
+                    <h5 class="card-title"><%= booking.listing&.name || "Unknown Listing" %></h5>
+                    <p class="card-text">
+                      YOUR HOST: <strong><%= booking.listing.user.email.upcase %></strong><br>
+                      <%= booking.start_date&.strftime("%d %b %Y") || "TBD" %> - <%= booking.end_date&.strftime("%d %b %Y") || "TBD" %>
+                    </p>
+                    <%= link_to "View Details", booking_path(booking), class: "btn btn-primary" %>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      <% end %>
-    </div>
+        <% end %>
+      </div>
   <% else %>
     <p>You don't have any bookings yet.</p>
   <% end %>
