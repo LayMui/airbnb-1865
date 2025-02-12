@@ -1,6 +1,7 @@
 class ListingsController < ApplicationController
 
   before_action :authenticate_user!
+  before_action :set_listing, only: [:show, :bookmarks]
 
   def index
     @listings = Listing.all
@@ -13,6 +14,22 @@ class ListingsController < ApplicationController
     }
   end
 
+  end
+
+
+  def bookmarks
+    # Assuming you have a Bookmark model to track the bookmarks
+    bookmark = current_user.bookmarks.find_by(listing: @listing)
+
+    if bookmark
+      bookmark.destroy
+      bookmarked = false
+    else
+      current_user.bookmarks.create(listing: @listing)
+      bookmarked = true
+    end
+
+    render json: { bookmarked: bookmarked }
   end
 
   def new
@@ -31,9 +48,14 @@ class ListingsController < ApplicationController
   end
 
   def show
-    @listing = Listing.find(params[:id])
+
   end
 
+  private
+
+  def set_listing
+    @listing = Listing.find(params[:id])
+  end
 
   def listings_params
     params.require(:listing).permit(:name, :description, :address, :price, :active, :capacity, :photo)
