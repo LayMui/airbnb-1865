@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :listings
+
 
   root to: "listings#index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -11,11 +11,13 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
     # root "posts#index"
-    resources :listings, only: [:index, :show] do
-      resources :bookings, only: [:new, :create]
-    end
-
     resources :bookings, only: [:index, :show]
+    resources :listings, only: [:index, :show, :new, :create] do
+      resources :bookings, only: [:new, :create]
+      member do
+        post :bookmarks
+      end
+    end
 
   get "hostings/index", to: "hostings#index"
 

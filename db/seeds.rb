@@ -18,21 +18,25 @@ User.destroy_all
 puts "Creating users..."
 
 guest1 = User.create!(
+  username: 'guest1',
   email: 'guest1@example.com',
   password: 'goodguest1'
 )
 
 guest2 = User.create!(
+  username: 'guest2',
   email: 'guest2@example.com',
   password: 'goodguest2'
 )
 
 host1 = User.create!(
+  username: 'host1',
   email: 'host1@example.com',
   password: 'goodhost1'
 )
 
 host2 = User.create!(
+  username: 'host2',
   email: 'host2@example.com',
   password: 'goodhost2'
 )
