@@ -63,7 +63,13 @@
         <p><%= @listing.address %></p>
         <p><%= @listing.location.country_code %></p>
     </div>
-    <div class="col-4"> <%# Calendar column %>
+    <div class="col-4"> <%# Calendar form column %>
+      <%= simple_form_for Booking.new, url: new_listing_booking_path(@listing), method: :get do |f| %>
+      <%= f.input :start_date %>
+      <%= f.input :end_date %>
+      <%= f.input :number_of_guests %>
+      <%= f.button :submit %>
+      <% end %>
     </div>
   </div>
 </div>
