@@ -4,6 +4,15 @@ class ListingsController < ApplicationController
 
   def index
     @listings = Listing.all
+
+     # The `geocoded` scope filters only listing with coordinates
+    @markers = @listings.geocoded.map do |listing|
+    {
+      lat: listing.latitude,
+      lng: listing.longitude
+    }
+  end
+
   end
 
   def new
@@ -12,7 +21,9 @@ class ListingsController < ApplicationController
 
   def create
     @listing = Listing.new(listings_params)
-    if @listing.save
+    @listing.user = current_user
+    @listing.location = Location.first
+    if @listing.save!
       redirect_to listings_path
     else
       render :new, status: :unprocessable_entity
@@ -21,13 +32,10 @@ class ListingsController < ApplicationController
 
   def show
     @listing = Listing.find(params[:id])
-    # unless @user == current_user
-      # redirect_to :listings, :alert => "Access denied."
-    # end
   end
 
 
   def listings_params
-    params.require(:listing).permit(:name, :description, :price, :active, :capacity, :photo)
+    params.require(:listing).permit(:name, :description, :address, :price, :active, :capacity, :photo)
   end
 end
