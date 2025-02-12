@@ -1,0 +1,33 @@
+
+<!-- app/views/bookmarks/index.html.erb -->
+<div class="container">
+   <%= render "shared/navbar" %>
+<h1>My Bookmarked Listings</h1>
+
+<div class="row">
+  <% @bookmarked_listings.each do |listing| %>
+    <div class="col-md-4 mb-4">
+      <div class="card" style="border: none; outline: none; box-shadow: none;">
+        <div class="image-container" style="position: relative;">
+          <% if listing.photo.attached? %>
+            <%= cl_image_tag listing.photo.key, height: 300, width: 350, crop: :fill, style: "border-radius: 15px;" %>
+          <% else %>
+            <%= image_tag "https://demo-source.imgix.net/house.jpg", height: 300, width: 350, style: "border-radius: 15px;" %>
+          <% end %>
+
+          <!-- Heart Icon -->
+          <i class="bi bi-heart-fill" style="position: absolute; top: 10px; right: 10px; font-size: 24px; color: red;"></i>
+        </div>
+
+        <div class="card-body">
+          <h5 class="card-title"><%= listing.name %></h5>
+
+          <p class="card-text"><%= listing.description %></p>
+          <a href="#" class="card-text"><%= listing.address %></a>
+          <p class="card-text"><%= listing.price %><strong>SGD </strong> per night</p>
+          <p class="card-text"><%= listing.capacity %> <strong>pax</strong></p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -18,6 +18,8 @@ Rails.application.routes.draw do
       end
     end
 
+  get '/bookmarks', to: 'bookmarks#index', as: 'bookmarks'
+
   get "hostings/index", to: "hostings#index"
 
 end
