@@ -3,18 +3,19 @@
     <%= link_to "Airbnb", root_path, class: "navbar-brand" %>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <div class="ms-auto flex">
-        <form class="flex my-2 my-lg-0">
+      <div class="ms-auto d-flex align-items-center">
+        <form class="d-flex my-2 my-lg-0">
           <input class="form-control me-2" name="query" type="search" placeholder="Search" aria-label="Search" value="<%= params[:query] %>">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
         <%= link_to "Add Listing", new_listing_path, class: "btn btn-outline-primary my-2 my-sm-0 ms-2" %>
 
-    <% if user_signed_in? %>
-      <%= button_to "Logout", destroy_user_session_path, class: "btn btn-outline-primary my-2 my-sm-0 ms-2", method: :delete %>
-      <%= link_to "Edit Profile", edit_user_registration_path, class: "btn btn-outline-primary my-2 my-sm-0 ms-2" %>
-
-    <% end %>
+        <% if user_signed_in? %>
+          <div class="d-flex">
+            <%= button_to "Logout", destroy_user_session_path, class: "btn btn-outline-primary my-2 my-sm-0 ms-2", method: :delete %>
+            <%= link_to "Edit Profile", edit_user_registration_path, class: "btn btn-outline-primary my-2 my-sm-0 ms-2" %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
