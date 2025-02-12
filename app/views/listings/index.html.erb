@@ -15,11 +15,11 @@
                 <span class="rating-text">4.5</span> <!-- Rating text -->
               </div>
           <div class="card-body">
-            <h5 class="card-title"><strong>Name: </strong><%= listing.name %></p></h5>
+            <h5 class="card-title"><%= listing.name %></p></h5>
             <p class="card-text"><%= listing.description %></p>
-             <a href="#" id="show-map"><%= listing.address %></a>
-            <p><strong>Price: </strong>$<%= listing.price %>/night</p>
-            <p><strong>Capacity: </strong><%= listing.capacity%></p>
+             <a href="#" class="card-text"><%= listing.address %></a>
+            <p class="card-text"><%= listing.price %><strong>SGD </strong> night</p>
+            <p class="card-text"><%= listing.capacity%> <strong>pax</strong></p>
           </div>
         </div>
       </div>
@@ -32,5 +32,3 @@
   data-map-markers-value="<%= @markers.to_json %>"
   data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
 </div>
-
-<div id="map" style="height: 400px; display: none;"></div>
