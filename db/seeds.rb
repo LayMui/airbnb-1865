@@ -66,7 +66,7 @@ puts "The Interlace created"
 
 listing2 = Listing.create!(
   name: 'Reflections at Keppel Bay',
-  description: 'Offering an amazing view of yourself, Reflections is the perfect place to meditate and face the demons inside you.',
+  description: 'Offering an amazing view of yourself, Reflections is the perfect place to meditate and face the angels inside you.',
   price: 200,
   active: true,
   capacity: 5,
