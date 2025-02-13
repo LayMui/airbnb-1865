@@ -10,7 +10,9 @@ class ListingsController < ApplicationController
       @markers = @bookmarked_listings.geocoded.map do |listing|
         {
           lat: listing.latitude,
-          lng: listing.longitude
+          lng: listing.longitude,
+          info_window_html: render_to_string(partial: "info_window", locals: {flat: flat}),
+          marker_html: render_to_string(partial: "marker")
         }
       end
 
