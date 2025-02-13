@@ -4,6 +4,9 @@ import mapboxgl from 'mapbox-gl' // Don't forget this!
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder"
 
 export default class extends Controller {
+
+
+  static targets = ["map", "address"];
   static values = {
     apiKey: String,
     markers: Array
@@ -39,6 +42,46 @@ export default class extends Controller {
         .addTo(this.map)
     });
   }
+
+    // This method will be triggered when the address is clicked
+    async zoomToAddress(event) {
+      event.preventDefault();
+      const address = this.data.get("mapAddress");
+      console.log(address)
+      // try {
+      //   const result = await this.geocodeAddress(address);
+      //   const coordinates = result.geometry.coordinates;
+
+      //   // Zoom to the address location
+      //   this.map.flyTo({
+      //     center: coordinates,
+      //     zoom: 14 // Zoom level
+      //   });
+
+      //   // Optionally, add a marker at the location
+      //   new mapboxgl.Marker()
+      //     .setLngLat(coordinates)
+      //     .addTo(this.map);
+      // } catch (error) {
+      //   console.error("Error geocoding address:", error);
+      // }
+    }
+
+    // Function to geocode an address using Mapbox Geocoder
+    geocodeAddress(address) {
+      console.log(address)
+      // return new Promise((resolve, reject) => {
+      //   this.geocoder.query(address, (err, result) => {
+      //     if (err) {
+      //       reject(err);
+      //     } else {
+      //       resolve(result.result);
+      //     }
+      //   });
+      // });
+    }
+
+
 
   #fitMapToMarkers() {
     const bounds = new mapboxgl.LngLatBounds()

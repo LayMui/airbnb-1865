@@ -25,7 +25,7 @@
 
 
             <p class="card-text"><%= listing.description %></p>
-             <a href="#" class="card-text"><%= listing.address %></a>
+            <%= link_to listing.address, "#", class: "card-text", data: { controller: "map", action: "click->map#zoomToAddress", map_address: "orchard road" } %>
             <p class="card-text"><%= listing.price %><strong>SGD </strong> night</p>
             <p class="card-text"><%= listing.capacity%> <strong>pax</strong></p>
           </div>
