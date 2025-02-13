@@ -5,17 +5,6 @@ class ListingsController < ApplicationController
 
   def index
     @bookmarked_listings = Listing.all
-
-      # The `geocoded` scope filters only listing with coordinates
-      @markers = @bookmarked_listings.geocoded.map do |listing|
-        {
-          lat: listing.latitude,
-          lng: listing.longitude,
-          info_window_html: render_to_string(partial: "info_window", locals: {flat: flat}),
-          marker_html: render_to_string(partial: "marker")
-        }
-      end
-
   end
 
 
