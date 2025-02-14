@@ -64,11 +64,18 @@
         <p><%= @listing.location.country_code %></p>
     </div>
     <div class="col-4"> <%# Calendar form column %>
-      <%= simple_form_for Booking.new, url: new_listing_booking_path(@listing), method: :get do |f| %>
-      <%= f.input :start_date %>
-      <%= f.input :end_date %>
-      <%= f.input :number_of_guests %>
-      <%= f.button :submit %>
+      <%= simple_form_for Booking.new, url: new_listing_booking_path(@listing), method: :get, html: { data: { controller: "date-range-picker" } } do |f| %>
+        <input type="text" data-date-range-picker-target="dateInput">
+        <%= f.input :start_date,
+            as: :string,
+            wrapper_html: { class: "d-none" },
+            input_html: { data: { date_range_picker_target: "startDate" } } %>
+        <%= f.input :end_date,
+            as: :string,
+            wrapper_html: { class: "d-none" },
+            input_html: { data: { date_range_picker_target: "endDate" } } %>
+        <%= f.input :number_of_guests %>
+        <%= f.button :submit %>
       <% end %>
     </div>
   </div>

@@ -3,17 +3,23 @@ import flatpickr from "flatpickr";
 
 // Connects to data-controller="datepicker"
 export default class extends Controller {
-  connect() {
-    flatpickr(this.element)
+  static targets = ["dateInput", "startDate", "endDate"]
 
-    mode: "range",
-      minDate: "today",
-        dateFormat: "Y-m-d",
-          disable: [
-            function (date) {
-              // disable every multiple of 8
-              return !(date.getDate() % 8);
-            }
-          ]
+  connect() {
+    flatpickr(
+      this.dateInputTarget,
+      {
+        mode: "range",
+        onChange: (selectedDates, dateStr, instance) => {
+          this.startDateTarget.value = selectedDates[0].toISOString()
+          if (selectedDates[1]) {
+            this.endDateTarget.value = selectedDates[1].toISOString()
+          }
+
+          console.log(this.startDateTarget.value)
+          console.log(this.endDateTarget.value)
+        }
+      }
+    )
   }
 }
