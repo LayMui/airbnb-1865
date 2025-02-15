@@ -8,11 +8,14 @@ class BookingsController < ApplicationController
   end
 
   def new
-    @booking = Booking.new
+    @listing = Listing.find(params[:listing_id])
+    @booking = @listing.bookings.new
   end
 
   def create
-    @booking = Booking.new(booking_params)
+    @listing = Listing.find(params[:listing_id])
+    @booking = @listing.bookings.new(booking_params)
+
     if @booking.save
       redirect_to @listing, notice: "Booking was successfully created."
     else
@@ -23,6 +26,6 @@ class BookingsController < ApplicationController
   private
 
   def booking_params
-    params.require(:booking).permit(:user_id, :start_date, :end_date, :number_of_guests)
+    params.require(:booking).permit(:listing_id, :user_id, :start_date, :end_date, :number_of_guests)
   end
 end

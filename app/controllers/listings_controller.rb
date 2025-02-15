@@ -7,7 +7,6 @@ class ListingsController < ApplicationController
     @bookmarked_listings = Listing.all
   end
 
-
   def bookmarks
     # Assuming you have a Bookmark model to track the bookmarks
     bookmark = current_user.bookmarks.find_by(listing: @listing)
