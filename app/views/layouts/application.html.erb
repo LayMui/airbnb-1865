@@ -13,8 +13,8 @@
 
   <body>
     <%= render "shared/flashes" %>
-    <div class="<%= 'container' unless current_page?(new_user_session_path) %>">
-      <%= render "shared/navbar" unless current_page?(new_user_session_path) %>
+    <div class="<%= 'container' unless current_page?(new_user_session_path) || current_page?(new_user_registration_path) || current_page?(new_password_path(resource_name)) %>">
+      <%= render "shared/navbar" unless current_page?(new_user_session_path) || current_page?(new_user_registration_path) || current_page?(new_password_path(resource_name)) %>
       <%= yield %>
     </div>
   </body>
