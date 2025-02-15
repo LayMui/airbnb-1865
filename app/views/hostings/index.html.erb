@@ -36,8 +36,8 @@
               <p class="card-text" data-booking-status-target="bookingStatus">Status: <%= booking.confirmation_status %></p>
               <%# <%= render "form" %>
 
-              <%= simple_form_for(booking, data: { booking_status_target: "form"}) do |f| %>
-
+              <%= simple_form_for(booking, data: { booking_status_target: "form" }) do |f| %>
+                <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
                 <%= f.input :confirmation_status, collection: ['Pending', 'Confirmed', 'Cancelled'] %>
                 <div class="form-actions btn btn-outline-info" data-action= "click->booking-status#send" >
                   <%= f.button :submit %>

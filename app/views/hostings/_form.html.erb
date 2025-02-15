@@ -1,6 +1,0 @@
-<%= simple_form_for booking, remote: true, data: { controller: "booking-status" } do |f| %>
-  <%= f.input :confirmation_status, collection: ['Pending', 'Confirmed', 'Cancelled'], include_blank: false,
-     input_html: {
-       data: { action: "change->booking-status#updateStatus" }
-     } %>
-<% end %>

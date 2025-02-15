@@ -13,7 +13,7 @@ export default class extends Controller {
     // console.log();
     // console.log(this.element);
     // console.log(this.bookingStatusTarget);
-    console.log(this.formTarget);
+    // console.log(this.formTarget);
     console.log("TODO: send request in AJAX");
     const formData = new FormData(this.formTarget)
     console.log(formData);
@@ -26,6 +26,10 @@ export default class extends Controller {
       .then(response => response.json())
       .then((data) => {
         console.log(data)
+
+        // const updatedStatus = data.updated_status;
+        // this.bookingStatusTarget.innerHTML = updatedStatus;
+
       })
   };
 }
