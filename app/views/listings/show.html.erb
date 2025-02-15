@@ -36,7 +36,12 @@
 
    <div class="row">
      <div class="col-8"> <%# Image column %>
-       <div style="width: 100%; height: 500px; background-image: url('https://www.capitaland.com/en/find-a-property/global-property-listing/residential/the-interlace/_jcr_content/root/container/container/entitydetails.coreimg.85.1600.jpeg/content/dam/capitaland-media-library/residential/Singapore/Singapore/The%20Interlace/Interlace_Woh%20Hup%20and%20CLS.jpg'); background-size: cover; background-position: center;">
+       <div style="width: 100%; height: 500px;">
+         <% if @listing.photo.attached? %>
+           <%= cl_image_tag @listing.photo.key, style: "width: 100%; height: 100%; object-fit: cover;" %>
+         <% else %>
+           <%= image_tag "https://demo-source.imgix.net/house.jpg", style: "width: 100%; height: 100%; object-fit: cover;" %>
+         <% end %>
        </div>
      </div>
      <div class="col-4"> <%# Calendar form column %>

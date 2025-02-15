@@ -1,0 +1,8 @@
+<div class="mt-3 text-center">
+  Don't have an account? <%= link_to "Sign up", "#", class: "text-decoration-none", data: { action: "click->auth#showSignup" } %>
+  <br>
+  <%= link_to "Forgot your password?", "#", 
+      class: "text-decoration-none", 
+      data: { action: "click->auth#showForgotPassword" },
+      onclick: "event.preventDefault();" %>
+</div> 
