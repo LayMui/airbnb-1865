@@ -4,12 +4,10 @@
     <% @bookmarked_listings.each do | listing | %>
       <div class="col-md-4 mb-4">
         <div class="card" style="border: none; outline: none; box-shadow: none;">
-          <%= link_to listing_path(listing) do %>
-            <% if listing.photo.attached? %>
-              <%= cl_image_tag listing.photo.key, height: 300, width: 350, crop: :fill, style: "border-radius: 15px;" %>
-            <% else %>
-              <%= image_tag "https://demo-source.imgix.net/house.jpg", height: 300, width: 350, style: "border-radius: 15px;" %>
-            <% end %>
+          <% if listing.photo.attached? %>
+           <%= cl_image_tag listing.photo.key, height: 300, width: 350, crop: :fill, style: "border-radius: 15px;" %>
+          <% else %>
+            <%= image_tag "https://demo-source.imgix.net/house.jpg", height: 300, width: 350,style: "border-radius: 15px;" %>
           <% end %>
           <!-- Heart Icon Positioned on Top Right -->
 
@@ -30,7 +28,7 @@
             <% end %>
           <div class="card-body">
            <h5 class="card-title d-flex justify-content-between align-items-center">
-            <%= link_to listing.name, listing_path(listing), style: "text-decoration: none; font-weight: bold;" %> <!-- Listing Name -->
+            <%= listing.name %> <!-- Listing Name -->
             <div class="rating-icon d-flex align-items-center">
               <i class="bi bi-star-fill fs-6"></i> <!-- Star icon from Bootstrap Icons -->
               <span class="rating-text ml-2">4.5</span> <!-- Rating text -->
