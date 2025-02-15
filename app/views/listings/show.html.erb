@@ -121,8 +121,21 @@
       </div>
       <div class="row"> <%# Listing amenities %>
       </div>
-
-
+    </div>
+    <div class="col-4"> <%# Calendar form column %>
+      <%= simple_form_for Booking.new, url: new_listing_booking_path(@listing), method: :get, html: { data: { controller: "datepicker" } } do |f| %>
+        <input type="text" data-datepicker-target="dateInput">
+        <%= f.input :start_date,
+            as: :string,
+            wrapper_html: { class: "d-none" },
+            input_html: { data: { datepicker_target: "startDate" } } %>
+        <%= f.input :end_date,
+            as: :string,
+            wrapper_html: { class: "d-none" },
+            input_html: { data: { datepicker_target: "endDate" } } %>
+        <%= f.input :number_of_guests %>
+        <%= f.button :submit %>
+      <% end %>
         <div style="width: 100%; height: 400px;"
              data-controller="map" 
              data-map-target="map"
@@ -134,9 +147,8 @@
              }].to_json %>"
              data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"
         </div>
-
-    
-    </div>
-   
+        <p><%= @listing.address %></p>
+        <p><%= @listing.location.country_code %></p>
+      </div>
   </div>
 </div>

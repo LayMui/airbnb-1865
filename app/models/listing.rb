@@ -2,6 +2,7 @@ class Listing < ApplicationRecord
   has_one_attached :photo
   belongs_to :user
   has_many :availabilities
+  has_many :bookings
   has_many :bookmarks
   has_many :bookmarked_by_users, through: :bookmarks, source: :user
   belongs_to :location

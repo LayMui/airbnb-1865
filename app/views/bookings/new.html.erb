@@ -1,2 +1,12 @@
+<%= render "shared/navbar" %>
+
 <div class="container">
+  <%= simple_form_for [@listing, @booking], url: listing_bookings_path(@listing), method: :post do |f| %>
+    <%= f.hidden_field :listing_id, value: @listing.id %>
+    <%= f.hidden_field :user_id, value: current_user.id if current_user %>
+    <%= f.hidden_field :start_date, value: params[:booking][:start_date] if params[:booking] %>
+    <%= f.hidden_field :end_date, value: params[:booking][:end_date] if params[:booking] %>
+    <%= f.hidden_field :number_of_guests, value: params[:booking][:number_of_guests] if params[:booking] %>
+    <%= f.submit "Create Booking" %>
+  <% end %>
 </div>
