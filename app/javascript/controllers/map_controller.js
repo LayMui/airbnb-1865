@@ -5,7 +5,7 @@ import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder"
 
 export default class extends Controller {
 
-  static targets = ["map", "address"];
+  static targets = ["map"];
 
   static values = {
     apiKey: String,
@@ -14,71 +14,17 @@ export default class extends Controller {
 
   connect() {
     mapboxgl.accessToken = this.apiKeyValue
-
-    this.map = new mapboxgl.Map({
-      container: this.element,
+    this.mapTarget.map = new mapboxgl.Map({
+      container: this.mapTarget,
       style: "mapbox://styles/mapbox/streets-v10"
     })
 
     this.#addMarkersToMap()
     this.#fitMapToMarkers()
 
-
-    this.map.addControl(new MapboxGeocoder({ accessToken: mapboxgl.accessToken,
+    // Add the search to the Map
+    this.mapTarget.map.addControl(new MapboxGeocoder({ accessToken: mapboxgl.accessToken,
       mapboxgl: mapboxgl }))
-  }
-
-
-  zoomToAddress(event) {
-    event.preventDefault(); // Prevent default link behavior (scrolling, etc.)
-
-    const address = event.target.dataset.mapAddress; // Get the address from the link's data attribute
-
-    console.log(address)
-    // Use Mapbox Geocoding API to get the coordinates (latitude, longitude) for the address
-    this.geocodeAddress(address)
-      .then((coordinates) => {
-        if (coordinates) {
-          this.zoomToCoordinates(coordinates);
-        }
-      })
-      .catch((error) => {
-        console.error("Error geocoding the address:", error);
-      });
-  }
-
-  // Function to call the Mapbox Geocoding API
-  async geocodeAddress(address) {
-    const geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json?access_token=${mapboxgl.accessToken}`;
-
-    const response = await fetch(geocodeUrl);
-    const data = await response.json();
-
-    // If we have results, return the coordinates (longitude, latitude) of the first result
-    if (data.features && data.features.length > 0) {
-      const [longitude, latitude] = data.features[0].center;
-      return [longitude, latitude];
-    }
-
-    return null; // If no results are found
-  }
-
-  // Function to zoom the map to the given coordinates
-  zoomToCoordinates(coordinates) {
-    const [longitude, latitude] = coordinates;
-
-    this.map.flyTo({
-      center: [longitude, latitude],
-      zoom: 16, // Adjust the zoom level as necessary
-      speed: 1.2, // Smooth zoom speed
-      curve: 1, // Smoother zoom effect
-      easing(t) {
-        return t;
-      },
-    });
-
-    // Update marker position
-     this.marker.setLngLat([longitude, latitude]);
   }
 
 
@@ -93,7 +39,7 @@ export default class extends Controller {
       new mapboxgl.Marker()
         .setLngLat([ marker.lng, marker.lat ])
         .setPopup(popup) // Add this
-        .addTo(this.map)
+        .addTo(this.mapTarget.map)
     });
   }
 
@@ -101,6 +47,22 @@ export default class extends Controller {
   #fitMapToMarkers() {
     const bounds = new mapboxgl.LngLatBounds()
     this.markersValue.forEach(marker => bounds.extend([ marker.lng, marker.lat ]))
-    this.map.fitBounds(bounds, { padding: 70, maxZoom: 15, duration: 0 })
+    this.mapTarget.map.fitBounds(bounds, { padding: 70, maxZoom: 15, duration: 0 })
+  }
+
+  zoomToAddress(event) {
+    event.preventDefault(); // Prevent default link behavior (scrolling, etc.)
+
+    const { lng, lat } = this.markersValue[event.currentTarget.dataset.value]
+    this.mapTarget.map.flyTo({
+      center: [lng, lat],
+      zoom: 16, // Adjust the zoom level as necessary
+      speed: 1.2, // Smooth zoom speed
+      curve: 1, // Smoother zoom effect
+      easing(t) {
+        return t;
+      },
+    });
+
   }
 }

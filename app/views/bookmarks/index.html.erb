@@ -1,7 +1,7 @@
 <div class="container">
-   <%= render "shared/navbar" %>
-  <div class="row">
-    <% @bookmarked_listings.each do | listing | %>
+  <%= render "shared/navbar" %>
+  <div class="row" data-controller="map" data-map-markers-value="<%= @markers.to_json %>" data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+    <% @bookmarked_listings.each_with_index do | listing, index | %>
       <div class="col-md-4 mb-4">
         <div class="card" style="border: none; outline: none; box-shadow: none;">
            <!-- Heart Icon -->
@@ -25,7 +25,8 @@
 
 
             <p class="card-text"><%= listing.description %></p>
-          <%= link_to listing.address, "#", class: "card-text", data: { controller: "map", action: "click->map#zoomToAddress", map_address: listing.address } %>
+
+          <%= link_to listing.address, "#", class: "card-text", data: { action: "click->map#zoomToAddress", value: index }  %>
           <p class="card-text"><%= listing.price %><strong>SGD </strong> night</p>
             <p class="card-text"><%= listing.capacity%> <strong>pax</strong></p>
           </div>
@@ -34,11 +35,7 @@
     <%end%>
 
  <div class="col-md-4">
-      <div style="width: 100%; height: 600px;"
-           data-controller="map"
-           data-map-target="map"
-           data-map-markers-value="<%= @markers.to_json %>"
-           data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+      <div style="width: 100%; height: 600px;" data-map-target="map">
       </div>
 
 </div>
