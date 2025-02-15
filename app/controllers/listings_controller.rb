@@ -50,6 +50,9 @@ class ListingsController < ApplicationController
 
   def set_listing
     @listing = Listing.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    flash[:alert] = "Sorry, that listing couldn't be found"
+    redirect_to listings_path
   end
 
   def listings_params
