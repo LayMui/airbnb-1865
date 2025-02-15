@@ -1,5 +1,4 @@
 <div class="container">
-   <%= render "shared/navbar" %>
   <%= turbo_frame_tag "listings" do %>
     <div class="row mt-4">
       <% @bookmarked_listings.each do | listing | %>
