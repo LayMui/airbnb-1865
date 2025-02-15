@@ -8,7 +8,10 @@
       <%= link_to listings_path, class: "btn btn-outline-dark me-2" do %>
         <i class="fas fa-arrow-left"></i> Back to Listings
       <% end %>
-      <button class="btn btn-outline-dark me-2">
+      <button class="btn btn-outline-dark me-2"
+              data-controller="share"
+              data-action="click->share#copyUrl"
+              data-share-target="button">
         <i class="fas fa-share"></i> Share
       </button>
       <% if current_user.bookmarked_listings.include?(@listing) %>
