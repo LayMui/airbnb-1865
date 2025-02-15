@@ -17,8 +17,9 @@ class BookingsController < ApplicationController
     @booking = @listing.bookings.new(booking_params)
 
     if @booking.save
-      redirect_to listings_path(@listing), notice: "Booking was successfully created."
+      redirect_to booking_path(@booking), notice: "Booking was successfully created."
     else
+      redirect_to booking_path(@booking), notice: "Failed to create booking."
       render :new, status: :unprocessable_entity
     end
   end
