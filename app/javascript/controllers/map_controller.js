@@ -14,17 +14,18 @@ export default class extends Controller {
 
   connect() {
     mapboxgl.accessToken = this.apiKeyValue
-    this.mapTarget.map = new mapboxgl.Map({
+
+    this.map = new mapboxgl.Map({
       container: this.mapTarget,
-      style: "mapbox://styles/mapbox/streets-v10"
+      style: "mapbox://styles/mapbox/streets-v10",
+      // Add these options to disable the default controls
+      attributionControl: false,
+      navigationControl: false,
+      searchControl: false
     })
 
     this.#addMarkersToMap()
     this.#fitMapToMarkers()
-
-    // Add the search to the Map
-    this.mapTarget.map.addControl(new MapboxGeocoder({ accessToken: mapboxgl.accessToken,
-      mapboxgl: mapboxgl }))
   }
 
 
@@ -39,7 +40,7 @@ export default class extends Controller {
       new mapboxgl.Marker()
         .setLngLat([ marker.lng, marker.lat ])
         .setPopup(popup) // Add this
-        .addTo(this.mapTarget.map)
+        .addTo(this.map)
     });
   }
 
@@ -47,14 +48,14 @@ export default class extends Controller {
   #fitMapToMarkers() {
     const bounds = new mapboxgl.LngLatBounds()
     this.markersValue.forEach(marker => bounds.extend([ marker.lng, marker.lat ]))
-    this.mapTarget.map.fitBounds(bounds, { padding: 70, maxZoom: 15, duration: 0 })
+    this.map.fitBounds(bounds, { padding: 70, maxZoom: 15, duration: 0 })
   }
 
   zoomToAddress(event) {
     event.preventDefault(); // Prevent default link behavior (scrolling, etc.)
 
     const { lng, lat } = this.markersValue[event.currentTarget.dataset.value]
-    this.mapTarget.map.flyTo({
+    this.map.flyTo({
       center: [lng, lat],
       zoom: 16, // Adjust the zoom level as necessary
       speed: 1.2, // Smooth zoom speed

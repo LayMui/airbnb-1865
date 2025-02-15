@@ -4,7 +4,11 @@ class ListingsController < ApplicationController
   before_action :set_listing, only: [:show, :bookmarks]
 
   def index
-    @bookmarked_listings = Listing.all
+    if params[:query].present?
+      @bookmarked_listings = Listing.where("name ILIKE ? OR description ILIKE ?", "%#{params[:query]}%", "%#{params[:query]}%")
+    else
+      @bookmarked_listings = Listing.all
+    end
   end
 
   def bookmarks
@@ -45,6 +49,9 @@ class ListingsController < ApplicationController
 
   def set_listing
     @listing = Listing.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    flash[:alert] = "Sorry, that listing couldn't be found"
+    redirect_to listings_path
   end
 
   def listings_params

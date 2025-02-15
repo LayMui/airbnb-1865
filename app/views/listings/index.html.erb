@@ -1,50 +1,51 @@
 <div class="container">
-   <%= render "shared/navbar" %>
-  <div class="row">
-    <% @bookmarked_listings.each do | listing | %>
-      <div class="col-md-4 mb-4">
-        <div class="card" style="border: none; outline: none; box-shadow: none;">
-          <%= link_to listing_path(listing) do %>
-            <div style="position: relative;">
-              <% if listing.photo.attached? %>
-                <%= cl_image_tag listing.photo.key, height: 300, width: 350, crop: :fill, style: "border-radius: 15px;" %>
-              <% else %>
-                <%= image_tag "https://demo-source.imgix.net/house.jpg", height: 300, width: 350, style: "border-radius: 15px;" %>
-              <% end %>
-              <% if current_user.bookmarked_listings.include?(listing) %>
-                <i class="bi bi-heart-fill"
-                   data-controller="favorite"
-                   data-action="click->favorite#toggle" 
-                   data-favorite-target="icon"
-                   data-favorite-listing-id="<%= listing.id %>"
-                   style="position: absolute; top: 10px; right: 80px; font-size: 24px; color: red; cursor: pointer; z-index: 10;"></i>
-              <% else %>
-                <i class="bi bi-heart"
-                   data-controller="favorite"
-                   data-action="click->favorite#toggle"
-                   data-favorite-target="icon"
-                   data-favorite-listing-id="<%= listing.id %>"
-                   style="position: absolute; top: 10px; right: 80px; font-size: 24px; color: red; cursor: pointer; z-index: 10;"></i>
-              <% end %>
-            </div>
-          <% end %>
-          <div class="card-body">
-            <h5 class="card-title d-flex justify-content-between align-items-center">
-              <%= link_to listing.name, listing_path(listing), style: "text-decoration: none; font-weight: bold;" %> <!-- Listing Name -->
-              <div class="rating-icon d-flex align-items-center">
-                <i class="bi bi-star-fill fs-6"></i> <!-- Star icon from Bootstrap Icons -->
-                <span class="rating-text ml-2">4.5</span> <!-- Rating text -->
+  <%= turbo_frame_tag "listings" do %>
+    <div class="row mt-4">
+      <% @bookmarked_listings.each do | listing | %>
+        <div class="col-md-4 mb-4">
+          <div class="card" style="border: none; outline: none; box-shadow: none;">
+            <%= link_to listing_path(listing), data: { turbo_frame: "_top" } do %>
+              <div style="position: relative;">
+                <% if listing.photo.attached? %>
+                  <%= cl_image_tag listing.photo.key, class: "img-fluid", style: "border-radius: 15px; width: 100%; height: auto;" %>
+                <% else %>
+                  <%= image_tag "https://demo-source.imgix.net/house.jpg", class: "img-fluid", style: "border-radius: 15px; width: 100%; height: auto;" %>
+                <% end %>
+                <% if current_user.bookmarked_listings.include?(listing) %>
+                  <i class="bi bi-heart-fill position-absolute"
+                     data-controller="favorite"
+                     data-action="click->favorite#toggle" 
+                     data-favorite-target="icon"
+                     data-favorite-listing-id="<%= listing.id %>"
+                     style="top: 5%; right: 5%; font-size: calc(1rem + 0.5vw); color: red; cursor: pointer; z-index: 10;"></i>
+                <% else %>
+                  <i class="bi bi-heart position-absolute"
+                     data-controller="favorite"
+                     data-action="click->favorite#toggle"
+                     data-favorite-target="icon"
+                     data-favorite-listing-id="<%= listing.id %>"
+                     style="top: 5%; right: 5%; font-size: calc(1rem + 0.5vw); color: red; cursor: pointer; z-index: 10;"></i>
+                <% end %>
               </div>
-            </h5>
+            <% end %>
+            <div class="card-body">
+              <h5 class="card-title d-flex justify-content-between align-items-center">
+                <%= link_to listing.name, listing_path(listing), style: "text-decoration: none; font-weight: bold;" %> <!-- Listing Name -->
+                <div class="rating-icon d-flex align-items-center">
+                  <i class="bi bi-star-fill fs-6"></i> <!-- Star icon from Bootstrap Icons -->
+                  <span class="rating-text ml-2">4.5</span> <!-- Rating text -->
+                </div>
+              </h5>
 
 
-            <p class="card-text"><%= listing.description %></p>
-             <a href="#" class="card-text"><%= listing.address %></a>
-            <p class="card-text"><%= listing.price %><strong>SGD </strong> night</p>
-            <p class="card-text"><%= listing.capacity%> <strong>pax</strong></p>
+              <p class="card-text"><%= listing.description %></p>
+               <a href="#" class="card-text"><%= listing.address %></a>
+              <p class="card-text"><%= listing.price %><strong>SGD </strong> night</p>
+              <p class="card-text"><%= listing.capacity%> <strong>pax</strong></p>
+            </div>
           </div>
         </div>
-      </div>
-    <%end%>
-  </div>
+      <%end%>
+    </div>
+  <% end %>
 </div>

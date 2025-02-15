@@ -5,9 +5,8 @@
     <% end %>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <div class="ms-auto d-flex align-items-center">
-        <form class="d-flex my-2 my-lg-0">
-          <input class="form-control me-2" name="query" type="search" placeholder="Search" aria-label="Search" value="<%= params[:query] %>">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <form class="d-flex my-2 my-lg-0" data-controller="search-form" data-turbo-frame="listings">
+          <input class="form-control me-2" name="query" type="search" placeholder="Search" aria-label="Search" value="<%= params[:query] %>" data-action="input->search-form#submit">
         </form>
         <%= link_to "Add Listing", new_listing_path, class: "btn btn-outline-primary my-2 my-sm-0 ms-2" %>
         <% if user_signed_in? %>

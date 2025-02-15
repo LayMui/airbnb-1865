@@ -24,13 +24,30 @@ export default class extends Controller {
     })
       .then(response => response.json()) // Assuming the server responds with JSON
       .then(data => {
-        // Handle the response and toggle the icon if needed
+        // Get the icon element
+        const iconElement = this.iconTarget.querySelector('i') || this.iconTarget;
+        
+        // Handle the response and toggle the icon
         if (data.bookmarked) {
-          this.iconTarget.classList.remove("bi-heart");
-          this.iconTarget.classList.add("bi-heart-fill");
+          if (iconElement.classList.contains('bi')) {
+            // Bootstrap Icons
+            iconElement.classList.remove("bi-heart");
+            iconElement.classList.add("bi-heart-fill");
+          } else {
+            // Font Awesome
+            iconElement.classList.remove("far", "fa-heart");
+            iconElement.classList.add("fas", "fa-heart");
+          }
         } else {
-          this.iconTarget.classList.remove("bi-heart-fill");
-          this.iconTarget.classList.add("bi-heart");
+          if (iconElement.classList.contains('bi')) {
+            // Bootstrap Icons
+            iconElement.classList.remove("bi-heart-fill");
+            iconElement.classList.add("bi-heart");
+          } else {
+            // Font Awesome
+            iconElement.classList.remove("fas", "fa-heart");
+            iconElement.classList.add("far", "fa-heart");
+          }
         }
       })
       .catch(error => {
