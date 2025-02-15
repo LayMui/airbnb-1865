@@ -65,7 +65,10 @@
     </div>
     <div class="col-4"> <%# Calendar form column %>
       <%= simple_form_for Booking.new, url: new_listing_booking_path(@listing), method: :get, html: { data: { controller: "datepicker" } } do |f| %>
-        <input type="text" data-datepicker-target="dateInput">
+        <input type="text" 
+               data-datepicker-target="dateInput"
+               data-available-dates="<%= @listing.availabilities.map { |a| { from: a.start_date, to: a.end_date } }.to_json %>"
+               data-disabled-dates="true">
         <%= f.input :start_date,
             as: :string,
             wrapper_html: { class: "d-none" },
