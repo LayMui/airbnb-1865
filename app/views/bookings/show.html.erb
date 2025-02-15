@@ -1,6 +1,9 @@
 <div class="container">
   <%= render "shared/navbar" %>
   <div class="mt-4">
+    <%= link_to bookings_path, class: "btn btn-outline-secondary mb-3" do %>
+      <i class="bi bi-arrow-left"></i> Back to Bookings
+    <% end %>
     <h3><strong>Booking Details</strong></h3>
   </div>
   <div class="row">
@@ -40,9 +43,16 @@
     <div class="col-8">
       <div style="width: 100%; height: 600px; background-color: #e9ecef;" 
            data-controller="map"
-           data-map-markers-value="<%= [{lat: @booking.listing.latitude, lng: @booking.listing.longitude}].to_json %>"
+           data-map-markers-value="<%= [{
+             lat: @booking.listing.latitude,
+             lng: @booking.listing.longitude,
+             info_window_html: render(partial: "info_window", locals: { listing: @booking.listing }),
+             marker_html: render(partial: "marker")
+           }].to_json %>"
            data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
         <!-- Map will be rendered here -->
       </div>
     </div>
   </div>
+
+  
