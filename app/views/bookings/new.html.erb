@@ -1,3 +1,12 @@
+<%= render "shared/navbar" %>
+
 <div class="container">
-  <%= render "shared/navbar" %>
+  <%= simple_form_for(@booking) do |f| %>
+    <%= f.hidden_field :listing_id %>
+    <%= f.hidden_field :user_id %>
+    <%= f.hidden_field :start_date, value: params[:start_date] %>
+    <%= f.hidden_field :end_date, value: params[:end_date] %>
+    <%= f.hidden_field :number_of_guests, value: params[:number_of_guests] %>
+    <%= f.submit %>
+  <% end %>
 </div>
