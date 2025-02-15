@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
     # root "posts#index"
     resources :bookings, only: [:index, :show]
-    resources :listings, only: [:index, :show, :new, :create] do 
+    resources :listings, only: [:index, :show, :new, :create] do
       resources :bookings, only: [:new, :create]
       member do
         post :bookmarks
