@@ -5,9 +5,6 @@ export default class extends Controller {
   static targets = ["dateInput", "startDate", "endDate"]
 
   connect() {
-    console.log("hello")
-    console.log(this.dateInputTarget)
-
     flatpickr(
       this.dateInputTarget,
       {
