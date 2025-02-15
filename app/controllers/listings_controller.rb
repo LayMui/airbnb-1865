@@ -4,16 +4,7 @@ class ListingsController < ApplicationController
   before_action :set_listing, only: [:show, :bookmarks]
 
   def index
-    @listings = Listing.all
-
-     # The `geocoded` scope filters only listing with coordinates
-    @markers = @listings.geocoded.map do |listing|
-    {
-      lat: listing.latitude,
-      lng: listing.longitude
-    }
-  end
-
+    @bookmarked_listings = Listing.all
   end
 
 
