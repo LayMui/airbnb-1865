@@ -13,9 +13,16 @@
         <%= link_to "Add Listing", new_listing_path, class: "btn btn-outline-primary my-2 my-sm-0 ms-2" %>
 
         <% if user_signed_in? %>
-          <div class="d-flex">
-            <%= button_to "Logout", destroy_user_session_path, class: "btn btn-outline-primary my-2 my-sm-0 ms-2", method: :delete %>
-            <%= link_to "Edit Profile", edit_user_registration_path, class: "btn btn-outline-primary my-2 my-sm-0 ms-2" %>
+          <div class="d-flex align-items-center">
+            <div class="dropdown">
+              <div class="avatar ms-2" style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; cursor: pointer;" data-bs-toggle="dropdown">
+                <%= image_tag "https://ui-avatars.com/api/?name=#{current_user.email}&background=random", class: "w-100 h-100" %>
+              </div>
+              <div class="dropdown-menu dropdown-menu-end">
+                <%= link_to "Edit Profile", edit_user_registration_path, class: "dropdown-item" %>
+                <%= button_to "Logout", destroy_user_session_path, class: "dropdown-item", method: :delete %>
+              </div>
+            </div>
           </div>
         <% end %>
       </div>
