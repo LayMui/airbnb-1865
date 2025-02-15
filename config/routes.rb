@@ -12,13 +12,14 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
     # root "posts#index"
     resources :bookings, only: [:index, :show]
-    resources :listings, only: [:index, :show, :new, :create] do 
+    resources :listings, only: [:index, :show, :new, :create] do
       resources :bookings, only: [:new, :create]
       member do
         post :bookmarks
       end
     end
 
-  get "hostings/index", to: "hostings#index"
+  get "hostings", to: "hostings#index", as: :hostings
+  patch "bookings/:id/accept", to: "bookings#booking_status_update"
 
 end
