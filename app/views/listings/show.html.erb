@@ -49,10 +49,14 @@
       <div class="row"> <%# Listing name and room details row %>
         <div class="d-flex align-items-center mb-3">
           <i class="fas fa-user-friends me-2"></i>
-          <span class="mb-0">Up to <%= @listing.capacity %> guests</span>
+            <span class="mb-1"><%= @listing.capacity %> guests | 1 bedroom | 1 bed | 1 bathroom</span>
         </div>
       </div>
       <div class="row"> <%# Listing rating row %>
+        <div class="rating-icon d-flex align-items-center">
+            <i class="bi bi-star-fill fs-6"></i> <!-- Star icon from Bootstrap Icons -->
+            <span class="rating-text my-2">4.5</span> <!-- Rating text -->
+        </div>
       </div>
       <div class="row"> <%# Listing host row %>
       </div>
