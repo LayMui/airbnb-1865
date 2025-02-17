@@ -1,7 +1,7 @@
 <div class="container">
   <%= turbo_frame_tag "listings" do %>
     <div class="row mt-4">
-      <% @bookmarked_listings.each do | listing | %>
+      <% @listings.each do | listing | %>
         <div class="col-md-4 mb-4">
           <div class="card" style="border: none; outline: none; box-shadow: none;">
             <%= link_to listing_path(listing), data: { turbo_frame: "_top" } do %>
@@ -14,7 +14,7 @@
                 <% if current_user.bookmarked_listings.include?(listing) %>
                   <i class="bi bi-heart-fill position-absolute"
                      data-controller="favorite"
-                     data-action="click->favorite#toggle" 
+                     data-action="click->favorite#toggle"
                      data-favorite-target="icon"
                      data-favorite-listing-id="<%= listing.id %>"
                      style="top: 5%; right: 5%; font-size: calc(1rem + 0.5vw); color: red; cursor: pointer; z-index: 10;"></i>
