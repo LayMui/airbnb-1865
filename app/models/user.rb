@@ -7,4 +7,5 @@ class User < ApplicationRecord
   has_many :bookings
   has_many :bookmarks
   has_many :bookmarked_listings, through: :bookmarks, source: :listing
+  has_one_attached :avatar
 end

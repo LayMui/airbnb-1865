@@ -26,29 +26,9 @@ export default class extends Controller {
       .then(data => {
         // Get the icon element
         const iconElement = this.iconTarget.querySelector('i') || this.iconTarget;
-        
-        // Handle the response and toggle the icon
-        if (data.bookmarked) {
-          if (iconElement.classList.contains('bi')) {
-            // Bootstrap Icons
-            iconElement.classList.remove("bi-heart");
-            iconElement.classList.add("bi-heart-fill");
-          } else {
-            // Font Awesome
-            iconElement.classList.remove("far", "fa-heart");
-            iconElement.classList.add("fas", "fa-heart");
-          }
-        } else {
-          if (iconElement.classList.contains('bi')) {
-            // Bootstrap Icons
-            iconElement.classList.remove("bi-heart-fill");
-            iconElement.classList.add("bi-heart");
-          } else {
-            // Font Awesome
-            iconElement.classList.remove("fas", "fa-heart");
-            iconElement.classList.add("far", "fa-heart");
-          }
-        }
+
+        iconElement.classList.toggle("bi-heart");
+        iconElement.classList.toggle("bi-heart-fill");
       })
       .catch(error => {
         console.error("Error:", error);

@@ -20,7 +20,7 @@
                 data-action="click->favorite#toggle"
                 data-favorite-target="icon"
                 data-favorite-listing-id="<%= @listing.id %>">
-          <i class="fas fa-heart"></i> Save
+          <i class="bi bi-heart-fill"></i> Save
         </button>
       <% else %>
         <button class="btn btn-outline-dark"
@@ -28,7 +28,7 @@
                 data-action="click->favorite#toggle"
                 data-favorite-target="icon"
                 data-favorite-listing-id="<%= @listing.id %>">
-          <i class="far fa-heart"></i> Save
+          <i class="bi bi-heart"></i> Save
         </button>
       <% end %>
     </div>
