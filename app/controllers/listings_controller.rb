@@ -5,9 +5,9 @@ class ListingsController < ApplicationController
 
   def index
     if params[:query].present?
-      @bookmarked_listings = Listing.where("name ILIKE ? OR description ILIKE ?", "%#{params[:query]}%", "%#{params[:query]}%")
+      @listings = Listing.where("name ILIKE ? OR description ILIKE ?", "%#{params[:query]}%", "%#{params[:query]}%")
     else
-      @bookmarked_listings = Listing.all
+      @listings = Listing.all
     end
   end
 
