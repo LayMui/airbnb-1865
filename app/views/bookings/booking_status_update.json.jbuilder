@@ -1,4 +1,4 @@
-json.updated_status render(partial: "booking_update_status/confirmation_status", formats: :html, locals: {booking: @booking})
+json.updated_status render(partial: "hostings/confirmation_status", formats: :html, locals: {booking: @booking})
 
 # json.inserted_item render(partial: "monuments/monument", formats: :html, locals: {monument: @monument})
 
