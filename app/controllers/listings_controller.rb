@@ -4,7 +4,7 @@ class ListingsController < ApplicationController
   before_action :set_listing, only: [:show, :bookmarks]
 
   def index
-    @bookmarked_listings = Listing.all
+    @listings = Listing.all
   end
 
 

@@ -1,0 +1,47 @@
+/* Base styling for heart icon */
+.heart-icon,
+.heart-icon-filled {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 2rem; /* Default font size */
+  color: red;
+  cursor: pointer;
+}
+
+/* Make sure the image container has relative positioning to position the heart icon */
+.image-container {
+  position: relative;
+  display: inline-block; /* Makes sure the image container is inline */
+  width: 100%; /* Ensures it stretches to fit the parent container */
+
+}
+
+/* Responsive icon size */
+@media (max-width: 1200px) {
+  .heart-icon,
+  .heart-icon-filled {
+    font-size: 1.8rem; /* Adjust for larger tablets or smaller screens */
+  }
+}
+
+@media (max-width: 992px) {
+  .heart-icon,
+  .heart-icon-filled {
+    font-size: 1.6rem; /* Adjust for medium tablets */
+  }
+}
+
+@media (max-width: 768px) {
+  .heart-icon,
+  .heart-icon-filled {
+    font-size: 1.4rem; /* Adjust for smaller tablets and mobile screens */
+  }
+}
+
+@media (max-width: 576px) {
+  .heart-icon,
+  .heart-icon-filled {
+    font-size: 1.2rem; /* Adjust for very small screens */
+  }
+}
