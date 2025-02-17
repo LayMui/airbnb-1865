@@ -1,5 +1,4 @@
 <div class="container">
-  <%= render "shared/navbar" %>
   <div class="row" data-controller="map" data-map-markers-value="<%= @markers.to_json %>" data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
     <% @bookmarked_listings.each_with_index do | listing, index | %>
       <div class="col-md-4 mb-4">
