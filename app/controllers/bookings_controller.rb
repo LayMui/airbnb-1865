@@ -5,6 +5,8 @@ class BookingsController < ApplicationController
 
   def show
     @booking = Booking.find(params[:id])
+    @future_bookings = current_user.bookings.where("start_date > ?", Time.current)
+    @past_bookings = current_user.bookings.where("end_date < ?", Time.current)
   end
 
   def new
