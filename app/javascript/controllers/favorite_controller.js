@@ -27,16 +27,8 @@ export default class extends Controller {
         // Get the icon element
         const iconElement = this.iconTarget.querySelector('i') || this.iconTarget;
 
-        // Handle the response and toggle the icon
-        if (iconElement.classList.contains('bi')) {
-          // Bootstrap Icons
-          iconElement.classList.remove(data.bookmarked ? "bi-heart" : "bi-heart-fill");
-          iconElement.classList.add(data.bookmarked ? "bi-heart-fill" : "bi-heart");
-        } else {
-          // Font Awesome
-          iconElement.classList.remove(data.bookmarked ? "far fa-heart" : "fas fa-heart");
-          iconElement.classList.add(data.bookmarked ? "fas fa-heart" : "far fa-heart");
-        }
+        iconElement.classList.toggle("bi-heart");
+        iconElement.classList.toggle("bi-heart-fill");
       })
       .catch(error => {
         console.error("Error:", error);
