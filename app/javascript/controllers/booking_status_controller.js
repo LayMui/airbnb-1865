@@ -10,14 +10,7 @@ export default class extends Controller {
 
   send(event) {
     event.preventDefault();
-    // console.log();
-    // console.log(this.element);
-    // console.log(this.bookingStatusTarget);
-    // console.log(this.formTarget);
-    console.log("TODO: send request in AJAX");
-    const formData = new FormData(this.formTarget)
-    console.log(formData);
-    // console.log(this.formTarget.action);
+
     fetch(`${this.formTarget.action}/accept`, {
       method: 'PATCH',
       headers: { "Accept": "application/json" },
@@ -25,10 +18,10 @@ export default class extends Controller {
     })
       .then(response => response.json())
       .then((data) => {
-        console.log(data)
+        console.log("data is connected to AJAX")
 
-        // const updatedStatus = data.updated_status;
-        // this.bookingStatusTarget.innerHTML = updatedStatus;
+        const updatedStatus = data.updated_status;
+        this.bookingStatusTarget.innerHTML = updatedStatus;
 
       })
   };
