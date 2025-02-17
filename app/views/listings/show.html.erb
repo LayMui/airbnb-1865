@@ -1,69 +1,154 @@
-<%= render "shared/navbar" %>
+<div class="container">
 
-<div class="container my-5">
-  <div id="title-bar" class="row">
+  <div id="title-bar" class="row mt-4">
     <div class="col-6">
-      <h1><%= @listing.name %></h1>
+      <h1 style="color:rgb(34, 34, 34); font-size: 2rem; font-weight: 600;"><%= @listing.name %></h1>
     </div>
-    <div id="title-bar-links" class="col-6">
-      <button class="btn btn-light">Share</button>
-      <button class="btn btn-light">Save</button>
+    <div id="title-bar-links" class="col-6 text-end">
+      <%= link_to listings_path, class: "btn btn-outline-dark me-2" do %>
+        <i class="fas fa-arrow-left"></i> Back to Listings
+      <% end %>
+      <button class="btn btn-outline-dark me-2"
+              data-controller="share"
+              data-action="click->share#copyUrl"
+              data-share-target="button">
+        <i class="fas fa-share"></i> Share
+      </button>
+      <% if current_user.bookmarked_listings.include?(@listing) %>
+        <button class="btn btn-outline-dark" 
+                data-controller="favorite"
+                data-action="click->favorite#toggle"
+                data-favorite-target="icon"
+                data-favorite-listing-id="<%= @listing.id %>">
+          <i class="bi bi-heart-fill"></i> Save
+        </button>
+      <% else %>
+        <button class="btn btn-outline-dark"
+                data-controller="favorite"
+                data-action="click->favorite#toggle"
+                data-favorite-target="icon"
+                data-favorite-listing-id="<%= @listing.id %>">
+          <i class="bi bi-heart"></i> Save
+        </button>
+      <% end %>
     </div>
   </div>
-  <div class="row"> <%# Picture row %>
-    <div class="col-12" style="height: 500px; background-image: url('https://www.capitaland.com/en/find-a-property/global-property-listing/residential/the-interlace/_jcr_content/root/container/container/entitydetails.coreimg.85.1600.jpeg/content/dam/capitaland-media-library/residential/Singapore/Singapore/The%20Interlace/Interlace_Woh%20Hup%20and%20CLS.jpg'); background-size: cover; background-position: center;">
-    </div>
-  </div>
-  <div class="row"> <%# Listing details row %>
+
+   <div class="row">
+     <div class="col-8"> <%# Image column %>
+       <div style="width: 100%; height: 500px;">
+         <% if @listing.photo.attached? %>
+           <%= cl_image_tag @listing.photo.key, style: "width: 100%; height: 100%; object-fit: cover;" %>
+         <% else %>
+           <%= image_tag "https://demo-source.imgix.net/house.jpg", style: "width: 100%; height: 100%; object-fit: cover;" %>
+         <% end %>
+       </div>
+     </div>
+     <div class="col-4"> <%# Calendar form column %>
+        <%= simple_form_for Booking.new, url: new_listing_booking_path(@listing), method: :get, html: { data: { controller: "datepicker" }, class: "mt-3" } do |f| %>
+          <input type="text" 
+                 data-datepicker-target="dateInput"
+                 data-available-dates="<%= @listing.availabilities.map { |a| { from: a.start_date, to: a.end_date } }.to_json %>"
+                 data-disabled-dates="true"
+                 placeholder="Pick date"
+                 style="color: #6c757d;">
+          <%= f.input :start_date,
+              as: :string,
+              wrapper_html: { class: "d-none" },
+              input_html: { data: { datepicker_target: "startDate" } } %>
+          <%= f.input :end_date,
+              as: :string,
+              wrapper_html: { class: "d-none" },
+              input_html: { data: { datepicker_target: "endDate" } } %>
+
+          <%= f.input :number_of_guests, wrapper_html: { class: "mt-4" },
+                      label: false,
+                      input_html: { 
+                        class: 'form-control',
+                        style: 'width: 50%; background-color: white; color: #6c757d;',
+                        min: 1,
+                        max: @listing.capacity,
+                        placeholder: 'Number of guests'
+                      } %>
+          <%= f.button :submit, class: "btn btn-primary w-50", style: "background-color: #FF385C; border: none;" %>
+        <% end %> 
+      </div>
+   </div>
+  <div class="row mt-4"> <%# Listing details row %>
     <div class="col-8"> <%# Listing details column %>
       <div class="row"> <%# Listing name and room details row %>
-        <h2>Presidential Suite @ The Interlace</h2>
-        <p>2 guests, 1 bedroom, 1 King bed, 1 bath</p>
+        <div class="d-flex align-items-center mb-3">
+          <i class="fas fa-user-friends me-2"></i>
+          <span class="mb-0">Up to <%= @listing.capacity %> guests</span>
+        </div>
       </div>
       <div class="row"> <%# Listing rating row %>
       </div>
       <div class="row"> <%# Listing host row %>
       </div>
       <div class="row"> <%# Listing perks %>
-        <div class="row">
-          <h5>Dive right in</h5>
-          <p>This is one of the few places in the area with a pool.</p>
+        <div class="row mb-4">
+          <div class="col-12">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-swimming-pool me-3"></i>
+              <div>
+                <span class="mb-1">Dive right in</span>
+                <span class="d-block text-muted">This is one of the few places in the area with a pool.</span>
+              </div>
+            </div>
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-key me-3"></i>
+              <div>
+                <span class="mb-1">Self check-in</span>
+                <span class="d-block text-muted">You can check in with the building staff.</span>
+              </div>
+            </div>
+            <div class="d-flex align-items-center">
+              <i class="fas fa-undo me-3"></i>
+              <div>
+                <span class="mb-1">Free cancellation within 48hrs</span>
+                <span class="d-block text-muted">Get a full refund if you change your mind.</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="row">
-          <h5>Self check-in</h5>
-          <p>You can check in with the building staff.</p>
-        </div>
-        <div class="row">
-          <h5>Free cancellation within 48hrs</h5>
-          <p>Get a full refund if you change your mind.</p>
-        </div>
-      </div>
       <div class="row"> <%# Listing details %>
-        <h3>About The Interlace</h3>
-        <p><%= @listing.description %></p>
+        <span class="mb-2"><strong>Description</strong></span>
+        <span><%= @listing.description %></span>
+      </div>
+      <div class="row"> <%# Listing location %>
+        <span class="mb-2"><strong>Location</strong></span>
       </div>
       <div class="row"> <%# Listing amenities %>
-        <h3>What this place offers</h3>
-        <div class="col-4">
-          <p>Free parking</p>
-          <p>Air conditioning</p>
-          <p>Luggage drop-off allowed</p>
-        </div>
-        <div class="col-4">
-          <p>Wifi</p>
-          <p>Pool</p>
-          <p>Private balcony</p>
-        </div>
       </div>
-
-
-
-
-
+    </div>
+    <div class="col-4"> <%# Calendar form column %>
+      <%= simple_form_for Booking.new, url: new_listing_booking_path(@listing), method: :get, html: { data: { controller: "datepicker" } } do |f| %>
+        <input type="text" data-datepicker-target="dateInput">
+        <%= f.input :start_date,
+            as: :string,
+            wrapper_html: { class: "d-none" },
+            input_html: { data: { datepicker_target: "startDate" } } %>
+        <%= f.input :end_date,
+            as: :string,
+            wrapper_html: { class: "d-none" },
+            input_html: { data: { datepicker_target: "endDate" } } %>
+        <%= f.input :number_of_guests %>
+        <%= f.button :submit %>
+      <% end %>
+        <div style="width: 100%; height: 400px;"
+             data-controller="map" 
+             data-map-target="map"
+             data-map-markers-value="<%= [{
+               lat: @listing.latitude,
+               lng: @listing.longitude,
+               info_window_html: render(partial: "info_window", locals: { listing: @listing }),
+               marker_html: render(partial: "marker")
+             }].to_json %>"
+             data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"
+        </div>
         <p><%= @listing.address %></p>
         <p><%= @listing.location.country_code %></p>
-    </div>
-    <div class="col-4"> <%# Calendar column %>
-    </div>
+      </div>
   </div>
 </div>

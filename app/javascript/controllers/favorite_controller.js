@@ -24,14 +24,11 @@ export default class extends Controller {
     })
       .then(response => response.json()) // Assuming the server responds with JSON
       .then(data => {
-        // Handle the response and toggle the icon if needed
-        if (data.bookmarked) {
-          this.iconTarget.classList.remove("bi-heart");
-          this.iconTarget.classList.add("bi-heart-fill");
-        } else {
-          this.iconTarget.classList.remove("bi-heart-fill");
-          this.iconTarget.classList.add("bi-heart");
-        }
+        // Get the icon element
+        const iconElement = this.iconTarget.querySelector('i') || this.iconTarget;
+
+        iconElement.classList.toggle("bi-heart");
+        iconElement.classList.toggle("bi-heart-fill");
       })
       .catch(error => {
         console.error("Error:", error);

@@ -12,3 +12,28 @@
 @import "pages/index";
 @import url("https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css");
 @import url("https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css");
+@import url("https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css");
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+textarea,
+select {
+  background-color: white !important;
+  color: #333;
+  border: 1px solid #ced4da;
+}
+
+.flat-form {
+  input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  textarea {
+    background-color: white;
+    color: #333;
+    border: 1px solid #ced4da;
+  }
+}
+

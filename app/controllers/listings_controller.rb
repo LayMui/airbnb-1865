@@ -4,18 +4,12 @@ class ListingsController < ApplicationController
   before_action :set_listing, only: [:show, :bookmarks]
 
   def index
-    @listings = Listing.all
-
-     # The `geocoded` scope filters only listing with coordinates
-    @markers = @listings.geocoded.map do |listing|
-    {
-      lat: listing.latitude,
-      lng: listing.longitude
-    }
+    if params[:query].present?
+      @listings = Listing.where("name ILIKE ? OR description ILIKE ?", "%#{params[:query]}%", "%#{params[:query]}%")
+    else
+      @listings = Listing.all
+    end
   end
-
-  end
-
 
   def bookmarks
     # Assuming you have a Bookmark model to track the bookmarks
@@ -55,6 +49,9 @@ class ListingsController < ApplicationController
 
   def set_listing
     @listing = Listing.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    flash[:alert] = "Sorry, that listing couldn't be found"
+    redirect_to listings_path
   end
 
   def listings_params

@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="row" data-controller="map" data-map-markers-value="<%= @markers.to_json %>" data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+    <% @bookmarked_listings.each_with_index do | listing, index | %>
+      <div class="col-md-4 mb-4">
+        <div class="card" style="border: none; outline: none; box-shadow: none;">
+           <!-- Heart Icon -->
+            <i class="bi bi-heart-fill" style="position: absolute; top: 10px; right: 10px; font-size: 24px; color: red;"></i>
+          <% if listing.photo.attached? %>
+           <%= cl_image_tag listing.photo.key, height: 300, width: 350, crop: :fill, style: "border-radius: 15px;" %>
+          <% else %>
+            <%= image_tag "https://demo-source.imgix.net/house.jpg", height: 300, width: 350,style: "border-radius: 15px;" %>
+          <% end %>
+          <!-- Heart Icon Positioned on Top Right -->
+
+
+          <div class="card-body">
+           <h5 class="card-title d-flex justify-content-between align-items-center">
+            <%= listing.name %> <!-- Listing Name -->
+            <div class="rating-icon d-flex align-items-center">
+              <i class="bi bi-star-fill fs-6"></i> <!-- Star icon from Bootstrap Icons -->
+              <span class="rating-text ml-2">4.5</span> <!-- Rating text -->
+            </div>
+          </h5>
+
+
+            <p class="card-text"><%= listing.description %></p>
+
+          <%= link_to listing.address, "#", class: "card-text", data: { action: "click->map#zoomToAddress", value: index }  %>
+          <p class="card-text"><%= listing.price %><strong>SGD </strong> night</p>
+            <p class="card-text"><%= listing.capacity%> <strong>pax</strong></p>
+          </div>
+        </div>
+      </div>
+    <%end%>
+
+ <div class="col-md-4">
+      <div style="width: 100%; height: 600px;" data-map-target="map">
+      </div>
+
+</div>
