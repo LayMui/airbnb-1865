@@ -26,28 +26,16 @@ export default class extends Controller {
       .then(data => {
         // Get the icon element
         const iconElement = this.iconTarget.querySelector('i') || this.iconTarget;
-        
+
         // Handle the response and toggle the icon
-        if (data.bookmarked) {
-          if (iconElement.classList.contains('bi')) {
-            // Bootstrap Icons
-            iconElement.classList.remove("bi-heart");
-            iconElement.classList.add("bi-heart-fill");
-          } else {
-            // Font Awesome
-            iconElement.classList.remove("far", "fa-heart");
-            iconElement.classList.add("fas", "fa-heart");
-          }
+        if (iconElement.classList.contains('bi')) {
+          // Bootstrap Icons
+          iconElement.classList.remove(data.bookmarked ? "bi-heart" : "bi-heart-fill");
+          iconElement.classList.add(data.bookmarked ? "bi-heart-fill" : "bi-heart");
         } else {
-          if (iconElement.classList.contains('bi')) {
-            // Bootstrap Icons
-            iconElement.classList.remove("bi-heart-fill");
-            iconElement.classList.add("bi-heart");
-          } else {
-            // Font Awesome
-            iconElement.classList.remove("fas", "fa-heart");
-            iconElement.classList.add("far", "fa-heart");
-          }
+          // Font Awesome
+          iconElement.classList.remove(data.bookmarked ? "far fa-heart" : "fas fa-heart");
+          iconElement.classList.add(data.bookmarked ? "fas fa-heart" : "far fa-heart");
         }
       })
       .catch(error => {
