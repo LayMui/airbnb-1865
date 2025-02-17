@@ -13,9 +13,11 @@
           <div class="d-flex align-items-center">
             <div class="dropdown">
               <div class="avatar ms-2" style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; cursor: pointer;" data-bs-toggle="dropdown">
-                <%= image_tag "https://ui-avatars.com/api/?name=#{current_user.email}&background=random", class: "w-100 h-100" %>
+                <%= image_tag current_user.avatar.attached? ? current_user.avatar : "default_avatar.png", class: "w-100 h-100" %>
               </div>
               <div class="dropdown-menu dropdown-menu-end">
+              <span class="dropdown-item-text"><%= current_user.email %></span>
+              <div class="dropdown-divider"></div>
                 <%= link_to "Edit Profile", edit_user_registration_path, class: "dropdown-item" %>
                 <%= button_to "Logout", destroy_user_session_path, class: "dropdown-item", method: :delete %>
               </div>
