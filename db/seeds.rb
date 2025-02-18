@@ -9,6 +9,7 @@
 #   end
 #
 require "open-uri"
+Bookmark.destroy_all
 Booking.destroy_all
 Availability.destroy_all
 Listing.destroy_all
@@ -124,6 +125,16 @@ booking3 = Booking.create!(
   end_date: DateTime.now + 28.days,
   confirmation_status: "pending",
   number_of_guests: 3
+)
+
+booking1 = Booking.create!(
+  booking_reference: "BOOK#{rand(1000..9999)}",
+  user: guest1,
+  listing: listing3,
+  start_date: DateTime.new(2024, 1, 1),
+  end_date: DateTime.new(2024, 1, 6),
+  confirmation_status: "pending",
+  number_of_guests: 2
 )
 
 puts "Creating available slots..."

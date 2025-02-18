@@ -4,15 +4,25 @@
     <h1 class="mt-4"><strong>Trips</strong></h1>
   </div>
   <% if @bookings.any? %>
-    <div class="card border mb-4">
-      <div class="card-body text-center">
-        <h4><strong>No trips booked ... yet!</strong></h4>
-        <p>Time to dust off your bags and start planning.</p>
-        <%= link_to "Start exploring", root_path, class: "btn btn-primary" %>
+    <% if !@bookings.any? %>
+      <div class="card border mb-4">
+        <div class="card-body text-center">
+          <h4><strong>No trips booked ... yet!</strong></h4>
+          <p>Time to dust off your bags and start planning.</p>
+          <%= link_to "Start exploring", root_path, class: "btn btn-primary" %>
+        </div>
       </div>
-    </div>
+    <% end %>
       <div class="row">
         <% @bookings.each do |booking| %>
+          <% if booking.end_date < Time.current %>
+            <% if @past_bookings_header.nil? %>
+              <div class="col-12">
+                <h3 class="mt-4 mb-3">Past Bookings</h3>
+              </div>
+              <% @past_bookings_header = true %>
+            <% end %>
+          <% end %>
           <div class="col-12 col-sm-6 col-lg-4 mb-4">
             <div class="card border-0">
               <div class="row g-0">
