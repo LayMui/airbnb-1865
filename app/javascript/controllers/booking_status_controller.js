@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="update-booking-status"
 export default class extends Controller {
-  static targets = ["bookingStatus", "form"]
+  static targets = ["bookingStatus", "bookingPendingNumber", "form"]
 
   connect() {
     console.log("Hello from update_booking_status");
@@ -18,10 +18,12 @@ export default class extends Controller {
     })
       .then(response => response.json())
       .then((data) => {
-        console.log("data is connected to AJAX")
+        // console.log("data is connected to AJAX")
 
         const updatedStatus = data.updated_status;
+        // console.log(updatedStatus);
         this.bookingStatusTarget.innerHTML = updatedStatus;
+
 
       })
   };

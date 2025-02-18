@@ -1,7 +1,8 @@
 <div class="container my-5">
   <div id="title-bar" class="row mt-4">
     <div class="col-6">
-      <h1 style="color:rgb(34, 34, 34); font-size: 2rem; font-weight: 600;">Welcome home, <%= current_user.email.match(/^([a-zA-Z0-9._%+-]+)/)%></h1>
+      <h1 style="color:rgb(34, 34, 34); font-size: 2rem; font-weight: 600;">Your listing page, <%= current_user.email.match(/^([a-zA-Z0-9._%+-]+)/)%></h1>
+      <p> Let guests know that you welcome them in your property.</p>
     </div>
     <div id="title-bar-links" class="col-6 text-end">
       <a class="btn btn-outline-dark me-2" href="/listings">
@@ -14,8 +15,8 @@
   </div>
 
   <%# @hostings = Listing.where(user_id: current_user.id) %>
-  <div class="row justify-content-between"> <% @hostings.each do |hosting| %>
-    <% booking_requests = Booking.where(listing_id: hosting.id) %>
+  <div class="row justify-content-between" data-controller="booking-status"> <% @hostings.each do |hosting| %>
+    <% @booking_requests = Booking.where(listing_id: hosting.id) %>
     <div class="col-8 py-3">
       <div class="card mb-3 rounded-4">
         <img src="https://www.capitaland.com/en/find-a-property/global-property-listing/residential/the-interlace/_jcr_content/root/container/container/entitydetails.coreimg.85.1600.jpeg/content/dam/capitaland-media-library/residential/Singapore/Singapore/The%20Interlace/Interlace_Woh%20Hup%20and%20CLS.jpg" class="card-img-top" alt="..." style="border-top-left-radius: .25rem; border-top-right-radius: .25rem;">
@@ -25,7 +26,15 @@
             <p class="card-text"><%= hosting.location.country_name %></p>
           </div>
           <div style="color: red;">
-            <p style="font-size: 12px"> <%= booking_requests.all.length %> <i class="fa-solid fa-user"> </i> </p>
+            <p style="font-size: 16px" data-booking-status-target="bookingPendingNumber">
+              <% @booking_pending_number = 0 %>
+              <% @booking_requests.each do |booking| %>
+                <% if booking.confirmation_status = "Pending" %>
+                  <i class="fa-solid fa-user"> </i>
+                  <% @booking_pending_number += 1 %>
+                <% end %>
+              <% end %>
+            </p>
           </div>
         </div>
       </div>
@@ -34,23 +43,25 @@
       <a href="#" class="btn btn-outline-primary" data-action="click->toggle#fire">Check booking status</a>
       <div>
         <div class="d-none" data-toggle-target="togglableElement">
-          <% booking_requests.each do |booking| %>
-            <div class="card mt-2 rounded-3 p-3" data-controller="booking-status">
-              <h5 class="card-title">Name: <%= booking.user.email.match(/^([a-zA-Z0-9._%+-]+)/) %></h5>
-              <p class="card-text">Ref: <%= booking.booking_reference %></p>
-              <p class="card-text">Check-in: <%= booking.start_date %></p>
-              <p class="card-text">Check-out: <%= booking.end_date %></p>
-              <p class="card-text" data-booking-status-target="bookingStatus">Status: <%= booking.confirmation_status %></p>
+          <% @booking_requests.each do |booking| %>
+            <div class="card custom-card mt-2 rounded-3 pb-3">
+              <div class="card-header">
+                <h5 class="card-title" style="align-items: center;"><%= booking.user.email.match(/^([a-zA-Z0-9._%+-]+)/) %></h5>
+              </div>
+              <div class="px-3 pt-2">
+                <p class="card-text">Ref: <%= booking.booking_reference %></p>
+                <p class="card-text">Check-in: <%= booking.start_date %></p>
+                <p class="card-text">Check-out: <%= booking.end_date %></p>
+                <p class="card-text" data-booking-status-target="bookingStatus">Status: <%= booking.confirmation_status %></p>
+              </div>
               <%# <%= render "form" %>
-
-              <%= simple_form_for(booking, data: { booking_status_target: "form" }) do |f| %>
+              <%= simple_form_for(booking, data: { booking_status_target: "form" }, html: { style: 'padding: 0 16px 0;' }) do |f| %>
                 <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
                 <%= f.input :confirmation_status, collection: ['Pending', 'Confirmed', 'Cancelled'] %>
                 <div class="form-actions btn btn-outline-info" data-action= "click->booking-status#send" >
                   <%= f.button :submit %>
                 </div>
               <% end %>
-
             </div>
           <% end %>
         </div>
