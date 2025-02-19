@@ -11,6 +11,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
     # root "posts#index"
+    resources :bookings, only: [:index, :show] do
+      patch :accept, on: :member
+    end
+
     resources :listings, only: [:index, :show, :new, :create] do
       resources :bookings, only: [:new, :create]
       member do
@@ -18,11 +22,12 @@ Rails.application.routes.draw do
       end
     end
 
+  get "hostings", to: "hostings#index"
   get '/bookmarks', to: 'bookmarks#index', as: 'bookmarks'
+
   resources :bookings do
     resources :reviews, only: [:create]
   end
-  get "hostings/index", to: "hostings#index"
 
   match "/404", to: "errors#not_found", via: :all
   match "/500", to: "errors#internal_server_error", via: :all

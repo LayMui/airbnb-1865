@@ -1,7 +1,6 @@
 // app/javascript/controllers/map_controller.js
 import { Controller } from "@hotwired/stimulus"
 import mapboxgl from 'mapbox-gl' // Don't forget this!
-import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder"
 
 export default class extends Controller {
 
@@ -32,10 +31,6 @@ export default class extends Controller {
   #addMarkersToMap() {
     this.markersValue.forEach((marker) => {
       const popup = new mapboxgl.Popup().setHTML(marker.info_window_html) // Add this
-
-    // Create a HTML element for your custom marker
-    const customMarker = document.createElement("div")
-    customMarker.innerHTML = marker.marker_html
 
       new mapboxgl.Marker()
         .setLngLat([ marker.lng, marker.lat ])
