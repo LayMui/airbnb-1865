@@ -26,7 +26,7 @@ class BookingsController < ApplicationController
     end
   end
 
-  def booking_status_update
+  def accept
     @booking = Booking.find(params[:id])
     respond_to do |format|
       if @booking.update(booking_status_update_params)

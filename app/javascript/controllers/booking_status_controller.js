@@ -11,7 +11,7 @@ export default class extends Controller {
   send(event) {
     event.preventDefault();
 
-    fetch(`${this.formTarget.action}/accept`, {
+    fetch(`${this.formTarget.action}`, {
       method: 'PATCH',
       headers: { "Accept": "application/json" },
       body: new FormData(this.formTarget)
