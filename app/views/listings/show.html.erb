@@ -1,5 +1,4 @@
 <div class="container">
-
   <div id="title-bar" class="row mt-4">
     <div class="col-6">
       <h1 style="color:rgb(34, 34, 34); font-size: 2rem; font-weight: 600;"><%= @listing.name %></h1>
@@ -14,13 +13,13 @@
               data-share-target="button">
         <i class="fas fa-share"></i> Share
       </button>
-      <% if current_user && current_user.bookmarked_listings.include?(@listing) %>
+      <% if current_user.bookmarked_listings.include?(@listing) %>
         <button class="btn btn-outline-dark"
                 data-controller="favorite"
                 data-action="click->favorite#toggle"
                 data-favorite-target="icon"
                 data-favorite-listing-id="<%= @listing.id %>">
-          <i class="bi bi-heart-fill"></i> Save
+          <i class="fas fa-heart"></i> Save
         </button>
       <% else %>
         <button class="btn btn-outline-dark"
@@ -28,63 +27,34 @@
                 data-action="click->favorite#toggle"
                 data-favorite-target="icon"
                 data-favorite-listing-id="<%= @listing.id %>">
-          <i class="bi bi-heart"></i> Save
+          <i class="far fa-heart"></i> Save
         </button>
       <% end %>
     </div>
   </div>
-   <div class="row">
-     <div class="col-12"> <%# Image column %>
-       <div style="width: 100%; height: 500px;">
-         <% if @listing.photo.attached? %>
-           <%= cl_image_tag @listing.photo.key, style: "width: 100%; height: 100%; object-fit: cover;" %>
-         <% else %>
-           <%= image_tag "https://demo-source.imgix.net/house.jpg", style: "width: 100%; height: 100%; object-fit: cover;" %>
-         <% end %>
-       </div>
-     </div>
-     <div class="col-4"> <%# Calendar form column %>
-        <%= simple_form_for Booking.new, url: new_listing_booking_path(@listing), method: :get, html: { data: { controller: "datepicker" }, class: "mt-3" } do |f| %>
-          <input type="text"
-                 data-datepicker-target="dateInput"
-                 data-unavailable-dates="<%= @listing.unavailable_dates.to_json %>"
-                 data-disabled-dates="true"
-                 placeholder="Pick date"
-                 style="color: #6c757d;">
-          <%= f.input :start_date,
-              as: :string,
-              wrapper_html: { class: "d-none" },
-              input_html: { data: { datepicker_target: "startDate" } } %>
-          <%= f.input :end_date,
-              as: :string,
-              wrapper_html: { class: "d-none" },
-              input_html: { data: { datepicker_target: "endDate" } } %>
-
-          <%= f.input :number_of_guests, wrapper_html: { class: "mt-4" },
-                      label: false,
-                      input_html: {
-                        class: 'form-control',
-                        style: 'width: 50%; background-color: white; color: #6c757d;',
-                        min: 1,
-                        max: @listing.capacity,
-                        placeholder: 'Number of guests'
-                      } %>
-          <%= f.button :submit, class: "btn btn-primary w-50", style: "background-color: #FF385C; border: none;" %>
+  <div class="row">
+    <div class="col-12"> <%# Image column %>
+      <div style="width: 100%; height: 500px;">
+        <% if @listing.photo.attached? %>
+          <%= cl_image_tag @listing.photo.key, style: "width: 100%; height: 100%; object-fit: cover; border-radius: 10px;" %>
+        <% else %>
+          <%= image_tag "https://demo-source.imgix.net/house.jpg", style: "width: 100%; height: 100%; object-fit: cover; border-radius: 10px;" %>
         <% end %>
       </div>
-   </div>
+    </div>
+  </div>
   <div class="row mt-4"> <%# Listing details row %>
     <div class="col-8"> <%# Listing details column %>
       <div class="row"> <%# Listing name and room details row %>
         <div class="d-flex align-items-center mb-3">
           <i class="fas fa-user-friends me-2"></i>
-            <span class="mb-1"><%= @listing.capacity %> guests | 1 bedroom | 1 bed | 1 bathroom</span>
+          <span class="mb-1"><%= @listing.capacity %> guests | 1 bedroom | 1 bed | 1 bathroom</span>
         </div>
       </div>
       <div class="row"> <%# Listing rating row %>
         <div class="rating-icon d-flex align-items-center">
-            <i class="bi bi-star-fill fs-6"></i> <!-- Star icon from Bootstrap Icons -->
-            <span class="rating-text my-2">4.5</span> <!-- Rating text -->
+          <i class="bi bi-star-fill fs-6"></i> <!-- Star icon from Bootstrap Icons -->
+          <span class="rating-text my-2">4.5</span> <!-- Rating text -->
         </div>
       </div>
       <div class="row"> <%# Listing host row %>
@@ -120,20 +90,14 @@
         <span class="mb-2"><strong>Description</strong></span>
         <span><%= @listing.description %></span>
       </div>
-      <div class="row"> <%# Listing location %>
-        <span class="mb-2"><strong>Location</strong></span>
-      </div>
-      <div class="row"> <%# Listing amenities %>
-      </div>
     </div>
     <div class="col-4"> <%# Calendar form column %>
       <%= simple_form_for Booking.new, url: new_listing_booking_path(@listing), method: :get, html: { data: { controller: "datepicker" }, class: "mt-3" } do |f| %>
         <input type="text"
-                data-datepicker-target="dateInput"
-                data-available-dates="<%= @listing.availabilities.map { |a| { from: a.start_date, to: a.end_date } }.to_json %>"
-                data-disabled-dates="true"
-                placeholder="Pick date"
-                style="color: #6c757d;">
+               data-datepicker-target="dateInput"
+               data-unavailable-dates="<%= @listing.unavailable_dates.to_json %>"
+               placeholder="Pick date"
+               style="color: #6c757d;">
         <%= f.input :start_date,
             as: :string,
             wrapper_html: { class: "d-none" },
@@ -155,20 +119,18 @@
         <%= f.button :submit, class: "btn btn-primary w-50", style: "background-color: #FF385C; border: none;" %>
       <% end %>
     </div>
-        <div style="width: 100%; height: 400px;"
-             data-controller="map"
-             data-map-target="map"
-             data-map-markers-value="<%= [{
-               lat: @listing.latitude,
-               lng: @listing.longitude,
-               info_window_html: render(partial: "info_window", locals: { listing: @listing }),
-               marker_html: render(partial: "marker")
-             }].to_json %>"
-             data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"
-        </div>
-        <p><%= @listing.address %></p>
-        <p><%= @listing.location.country_code %></p>
-      </div>
+  </div>
+  <h3 class="mb-2"><strong>Location</strong></h3>
+  <div style="width: 100%; height: 400px;"
+       data-controller="map"
+       data-map-target="map"
+       data-map-markers-value="<%= [{
+         lat: @listing.latitude,
+         lng: @listing.longitude,
+         info_window_html: render(partial: "info_window", locals: { listing: @listing }),
+         marker_html: render(partial: "marker")
+       }].to_json %>"
+       data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
   </div>
   <p><%= @listing.address %></p>
   <p><%= @listing.location.country_code %></p>

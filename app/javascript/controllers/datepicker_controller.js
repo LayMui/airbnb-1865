@@ -18,17 +18,6 @@ export default class extends Controller {
             this.endDateTarget.value = selectedDates[1].toISOString()
           }
         },
-        enable: availableDates.flatMap(range => {
-          const dates = []
-          let currentDate = new Date(range.from)
-          const endDate = new Date(range.to)
-
-          while (currentDate <= endDate) {
-            dates.push(new Date(currentDate))
-            currentDate.setDate(currentDate.getDate() + 1)
-          }
-          return dates
-        })
         disable: unavailableDates
       }
     )
