@@ -16,14 +16,21 @@ class BookingsController < ApplicationController
 
   def create
     @listing = Listing.find(params[:listing_id])
-    @booking = @listing.bookings.new(booking_params)
+    @booking = CreateBookingService.(
+      @listing, current_user.id, 
+      booking_params[:start_date], 
+      booking_params[:end_date], 
+      booking_params[:number_of_guests]
+    )
 
-    if @booking.save
+    if @booking.persisted?
       redirect_to booking_path(@booking), notice: "Booking was successfully created."
     else
-      redirect_to booking_path(@booking), notice: "Failed to create booking."
       render :new, status: :unprocessable_entity
     end
+
+  rescue ActiveRecord::RecordInvalid => e
+    redirect_to listing_path(@listing), alert: e.message
   end
 
   private

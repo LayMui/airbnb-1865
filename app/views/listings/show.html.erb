@@ -48,7 +48,7 @@
         <%= simple_form_for Booking.new, url: new_listing_booking_path(@listing), method: :get, html: { data: { controller: "datepicker" }, class: "mt-3" } do |f| %>
           <input type="text"
                  data-datepicker-target="dateInput"
-                 data-available-dates="<%= @listing.availabilities.map { |a| { from: a.start_date, to: a.end_date } }.to_json %>"
+                 data-unavailable-dates="<%= @listing.unavailable_dates.to_json %>"
                  data-disabled-dates="true"
                  placeholder="Pick date"
                  style="color: #6c757d;">
