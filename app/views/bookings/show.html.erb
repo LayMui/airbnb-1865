@@ -55,4 +55,22 @@
     </div>
   </div>
 
+  <% if @booking.review.present? %>
+    <div class="review">
+      <h3>Your Review</h3>
+      <div class="rating">
+        <% @booking.review.rating.times do %>
+          <i class="bi bi-star-fill text-warning"></i>
+        <% end %>
+        <% (5 - @booking.review.rating).times do %>
+          <i class="bi bi-star text-warning"></i>
+        <% end %>
+      </div>
+      <p><%= @booking.review.comment %></p>
+    </div>
+  <% elsif @booking.reviewable? %>
+    <h3>Leave a Review</h3>
+    <%= render 'reviews/form', booking: @booking, review: @review %>
+  <% end %>
+
   

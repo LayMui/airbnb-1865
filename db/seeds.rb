@@ -101,9 +101,9 @@ booking1 = Booking.create!(
   booking_reference: "BOOK#{rand(1000..9999)}",
   user: guest1,
   listing: listing1,
-  start_date: DateTime.now,
-  end_date: DateTime.now + 5.days,
-  confirmation_status: "pending",
+  start_date: DateTime.now - 30.days,
+  end_date: DateTime.now - 25.days,
+  confirmation_status: "completed",
   number_of_guests: 2
 )
 
@@ -111,9 +111,9 @@ booking2 = Booking.create!(
   booking_reference: "BOOK#{rand(1000..9999)}",
   user: guest2,
   listing: listing2,
-  start_date: DateTime.now + 7.days,
-  end_date: DateTime.now + 11.days,
-  confirmation_status: "pending",
+  start_date: DateTime.now - 20.days,
+  end_date: DateTime.now - 16.days,
+  confirmation_status: "completed",
   number_of_guests: 4
 )
 

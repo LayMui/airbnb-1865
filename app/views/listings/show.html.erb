@@ -82,7 +82,15 @@
           <span class="mb-0">Up to <%= @listing.capacity %> guests</span>
         </div>
       </div>
-      <div class="row"> <%# Listing rating row %>
+      <div class="row mb-4"> <%# Listing rating row %>
+        <div class="d-flex align-items-center">
+          <i class="fas fa-star me-2"></i>
+          <% if @listing.reviews.any? %>
+            <span class="mb-0"><%= @listing.reviews.average(:rating).round(1) %> · <%= @listing.reviews.count %> reviews</span>
+          <% else %>
+            <span class="mb-0">New listing</span>
+          <% end %>
+        </div>
       </div>
       <div class="row"> <%# Listing host row %>
       </div>
@@ -118,6 +126,28 @@
       </div>
       <div class="row"> <%# Listing location %>
         <span class="mb-2"><strong>Location</strong></span>
+      </div>
+      <div class="row mt-4"> <%# Reviews section %>
+        <h3>Reviews</h3>
+        <% if @listing.reviews.any? %>
+          <% @listing.reviews.each do |review| %>
+            <div class="review-card mb-3">
+              <div class="d-flex align-items-center mb-2">
+                <% review.rating.times do %>
+                  <i class="fas fa-star text-warning"></i>
+                <% end %>
+                <% (5 - review.rating).times do %>
+                  <i class="far fa-star text-warning"></i>
+                <% end %>
+              </div>
+              <p class="mb-1"><strong><%= review.booking.user.email %></strong></p>
+              <p class="text-muted"><%= review.created_at.strftime("%B %Y") %></p>
+              <p><%= review.comment %></p>
+            </div>
+          <% end %>
+        <% else %>
+          <p>No reviews yet</p>
+        <% end %>
       </div>
       <div class="row"> <%# Listing amenities %>
       </div>
