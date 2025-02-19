@@ -1,0 +1,20 @@
+<% if booking.reviewable? %>
+  <%= form_with(model: [booking, review], local: true) do |f| %>
+    <div class="field">
+      <%= f.label :rating %>
+      <div class="rating">
+        <% 5.times do |i| %>
+          <%= f.radio_button :rating, 5-i %>
+          <%= label_tag "review_rating_#{5-i}", "★" %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="field">
+      <%= f.label :comment %>
+      <%= f.text_area :comment %>
+    </div>
+
+    <%= f.submit "Submit Review", class: "button" %>
+  <% end %>
+<% end %> 

@@ -7,6 +7,7 @@ class BookingsController < ApplicationController
     @booking = Booking.find(params[:id])
     @future_bookings = current_user.bookings.where("start_date > ?", Time.current)
     @past_bookings = current_user.bookings.where("end_date < ?", Time.current)
+    @review = @booking.review || Review.new
   end
 
   def new
@@ -26,7 +27,7 @@ class BookingsController < ApplicationController
     if @booking.persisted?
       redirect_to booking_path(@booking), notice: "Booking was successfully created."
     else
-      render :new, status: :unprocessable_entity
+      redirect_to listing_path(@listing), alert: "Sorry, those dates are not available"
     end
 
   rescue ActiveRecord::RecordInvalid => e

@@ -25,8 +25,9 @@ Rails.application.routes.draw do
   get "hostings", to: "hostings#index"
   get '/bookmarks', to: 'bookmarks#index', as: 'bookmarks'
 
-  # get "hostings/index", to: "hostings#index"
-  get '/bookings', to: 'bookings#index'
+  resources :bookings do
+    resources :reviews, only: [:create]
+  end
 
   match "/404", to: "errors#not_found", via: :all
   match "/500", to: "errors#internal_server_error", via: :all

@@ -1,0 +1,24 @@
+.rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  text-align: left;
+}
+
+.rating > input {
+  display: none;
+}
+
+.rating > label {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+  font-size: 1.5em;
+  color: #ddd;
+  cursor: pointer;
+}
+
+.rating > label:hover,
+.rating > label:hover ~ label,
+.rating > input:checked ~ label {
+  color: #ffd700;
+} 
