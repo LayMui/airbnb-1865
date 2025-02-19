@@ -14,7 +14,6 @@
               data-share-target="button">
         <i class="fas fa-share"></i> Share
       </button>
-      <% if current_user.bookmarked_listings.include?(@listing) %>
       <% if current_user && current_user.bookmarked_listings.include?(@listing) %>
         <button class="btn btn-outline-dark"
                 data-controller="favorite"
