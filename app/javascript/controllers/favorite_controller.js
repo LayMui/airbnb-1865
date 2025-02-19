@@ -3,11 +3,21 @@ import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
   static targets = ["icon"];
+  static values = {
+    isSignIn: Boolean,
+
+  }
 
   toggle(event) {
     event.preventDefault();
+
+    if (!this.isSignInValue) {
+      window.location.replace("/users/sign_in")
+      return
+    }
     // Toggle the heart icon between filled and unfilled
     // Get the listing ID from the data attribute passed to the element
+
     const listingId = this.element.getAttribute("data-favorite-listing-id");
 
     // Send the POST request to bookmark/unbookmark the listing
@@ -26,29 +36,9 @@ export default class extends Controller {
       .then(data => {
         // Get the icon element
         const iconElement = this.iconTarget.querySelector('i') || this.iconTarget;
-        
-        // Handle the response and toggle the icon
-        if (data.bookmarked) {
-          if (iconElement.classList.contains('bi')) {
-            // Bootstrap Icons
-            iconElement.classList.remove("bi-heart");
-            iconElement.classList.add("bi-heart-fill");
-          } else {
-            // Font Awesome
-            iconElement.classList.remove("far", "fa-heart");
-            iconElement.classList.add("fas", "fa-heart");
-          }
-        } else {
-          if (iconElement.classList.contains('bi')) {
-            // Bootstrap Icons
-            iconElement.classList.remove("bi-heart-fill");
-            iconElement.classList.add("bi-heart");
-          } else {
-            // Font Awesome
-            iconElement.classList.remove("fas", "fa-heart");
-            iconElement.classList.add("far", "fa-heart");
-          }
-        }
+
+        iconElement.classList.toggle("bi-heart");
+        iconElement.classList.toggle("bi-heart-fill");
       })
       .catch(error => {
         console.error("Error:", error);

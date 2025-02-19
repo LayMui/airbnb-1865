@@ -1,0 +1,7 @@
+<% @booking_pending_number = 0 %>
+<% @booking_requests.each do |booking| %>
+  <% if booking.confirmation_status = "Pending" %>
+    <i class="fa-solid fa-user"> </i>
+    <% @booking_pending_number += 1 %>
+  <% end %>
+<% end %>

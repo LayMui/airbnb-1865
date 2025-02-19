@@ -5,7 +5,7 @@ export default class extends Controller {
   static targets = ["dateInput", "startDate", "endDate"]
 
   connect() {
-    const availableDates = JSON.parse(this.dateInputTarget.dataset.availableDates)
+    const unavailableDates = JSON.parse(this.dateInputTarget.dataset.unavailableDates)
 
     flatpickr(
       this.dateInputTarget,
@@ -29,6 +29,7 @@ export default class extends Controller {
           }
           return dates
         })
+        disable: unavailableDates
       }
     )
   }
