@@ -13,6 +13,7 @@ export default class extends Controller {
 
   connect() {
     mapboxgl.accessToken = this.apiKeyValue
+    console.log(mapboxgl.supported())
 
     this.map = new mapboxgl.Map({
       container: this.mapTarget,
@@ -58,6 +59,7 @@ export default class extends Controller {
       easing(t) {
         return t;
       },
+      essential: true
     });
 
   }
